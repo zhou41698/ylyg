@@ -1,0 +1,50 @@
+@charset "utf-8";
+
+/*第三方登录*/
+.thirdParty { font-size:0; line-height:0;}
+.thirdParty a { width:30px; height:30px; display:inline-block; margin:0 2px 0 0; text-indent:-9999px; background:none; opacity:0.8; filter:Alpha(opacity=80); -moz-opacity:0.8; position:relative;}
+.thirdParty a:hover { opacity:1; filter:Alpha(opacity=100); -moz-opacity:1; background-color:#fff;}
+.thirdParty a i { display:block; width:24px; height:24px; background:url(images/icon_thirdparty_s.png) no-repeat; position:absolute; top:50%; left:50%; margin-left:-12px; margin-top:-12px;}
+.thirdParty a.QQ i { background-position:0 -24px;}
+.thirdParty a.renren i { background-position:0 -48px;}
+.thirdParty a.QrCode i { background-position:0 -72px;}
+.thirdParty a.weixin i { background-position:0 -96px;}
+
+/*善见总站*/
+div.login .login_but .thirdParty { padding:2px 0 0; text-align:right; float:right;}
+div.login .login_but .thirdParty a { width:20px; height:20px; margin:0 2px; text-align:start;}
+div.login .thirdParty a:hover { background-color:transparent;}
+
+
+/*学校官网*/
+.head_top .top_login .thirdParty a { margin:0 2px 0 0; background:none;}
+
+/*个人空间*/
+div.login .biaodan .thirdParty { padding:0 8px; float:right;}
+div.login .biaodan .thirdParty a { width:40px; height:34px; margin:0 6px 0 0;}
+div.login .biaodan .thirdParty a i { background-image:url(images/icon_thirdparty.png); width:32px; height:32px; margin-left:-16px; margin-top:-16px;}
+div.login .biaodan .thirdParty a.QQ i { background-position:0 -32px;}
+div.login .biaodan .thirdParty a.QrCode i { background-position:0 -64px;}
+div.login .biaodan .thirdParty a.weixin i { background-position:0 -96px;}
+
+/*共用头部导航-黑*/
+.login_tip .lt_lab .thirdParty { padding:2px 0 0; text-align:right; float:right;}
+.login_tip .lt_lab .thirdParty a { width:20px; height:20px; margin:0 2px; text-align:start;}
+.login_tip .lt_lab .thirdParty a:hover { background-color:transparent;}
+
+/*使用善见云校扫码登录*/
+.third-dilogbag { width:300px; text-align:center; background:#fff; font-family:"Microsoft yahei"; opacity:.98; box-shadow:0px 2px 5px rgba(0,0,0,0.3); position:fixed; top:50%; left:50%; padding:30px 0px; z-index:99999; display:none;}
+.third-dilogbag img { margin:0 auto;}
+.third-dilogbag h3{ color:#a6a6a6;display:block;font-size:16px;text-align:center;margin:15px 0 10px;font-weight:normal;}
+.third-dilogbag p{ text-align:center;position: relative;width:200px;margin:0 auto;}
+.third-dilogbag p span{ color:#ed9696;font-size:16px;}
+.third-dilogbag p i{ width:25px;border-top:1px solid #ee9797;height:10px;position:absolute;top:10px;}
+.third-dilogbag p i.lef{ left:0;}
+.third-dilogbag p i.rig{ right:0;}
+/*#dilogbag01{ padding-top:30px;height:270px;}*/
+.dilogbag-close { width:30px; height:30px; position:absolute; top:0; right:0; cursor:pointer; opacity:0.8; filter:Alpha(opacity=80); -moz-opacity:0.8;}
+.dilogbag-close:hover { opacity:1; filter:Alpha(opacity=100); -moz-opacity:1; background-color:#f2f2f2;}
+.dilogbag-close i { display:block; width:20px; height:20px; position:absolute; left:50%; top:50%; margin-top:-10px; margin-left:-10px; background:url(images/close.png) no-repeat;}
+.layer-dilogbag { width:100%; height:100%; position:fixed; top:0; left:0; background:rgba(0,0,0,0.2); filter:progid:DXImageTransform.Microsoft.gradient(enabled='true', startColorstr='#33000000', endColorstr='#33000000'); z-index:99998; display:none;}
+
+

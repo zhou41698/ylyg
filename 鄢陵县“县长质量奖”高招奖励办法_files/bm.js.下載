@@ -1,0 +1,13 @@
+// JavaScript Document
+function yyfybm() {
+    top.$.dialog({
+        title: "常宁市第二幼儿园博美分园招生报名",
+        content: "<div style='height:50px; width:400px;text-align:center; margin-top:50px;'><a href='https://fs.30edu.com.cn/Submit/e45ba280-f6d7-4ba6-8dd9-377e87fe8f94.shtml' target='_blank'><span style='font-size:26px; font-weight:bold;'>小班报名入口</span></a></div><div style='height:50px; width:400px;text-align:center;'><a href='https://fs.30edu.com.cn/Submit/236b5e35-6b95-4fa3-9525-f6f0d1125e39.shtml' target='_blank'><span style='font-size:26px; font-weight:bold;'>中班报名入口</span></a></div><div style='height:50px; width:400px;text-align:center; margin-bottom:50px;'><a href='https://fs.30edu.com.cn/Submit/7a2f7a6f-a616-4910-882b-26c8da4ddc68.shtml' target='_blank'><span style='font-size:26px; font-weight:bold;'>大班报名入口</span></a></div>",
+        lock: true,
+        //cancel: false,
+        //okValue: "重新上传",
+        //ok: function () {
+        //    HuijiHetong();
+        //}
+    });
+}

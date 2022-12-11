@@ -1,0 +1,23 @@
+//alert(window.location.href);
+
+var ArtID_Brand = window.location.href.split('/');
+var ArtID = ArtID_Brand[ArtID_Brand.length - 1];
+ArtID = ArtID.replace(/.shtml/g, "");
+//alert(ArtID + " 学校:" + window.UnitID);
+
+var newsURL = "http://news.30edu.com.cn/Article/Index/" + window.UnitID + "/" + ArtID;
+
+document.writeln("<div class=\'float share-mobile\'>");
+document.writeln("<p class=\'quick-response\'><img src=\"https://passport.30edu.com.cn/Login/GetQRCode?url=" + newsURL + "\" width=\"90\" height=\"90\" />分享到微信</p>");
+document.writeln("<div class=\'mat\'></div>");
+document.writeln("</div>");
+
+
+//debugger;
+//$("#qrcodeHolder").qrcode({
+//    width: 80,
+//    height: 80,
+//    text: newsURL
+//});
+
+//$("#qrcodeHolder").append("<br>分享到微信");

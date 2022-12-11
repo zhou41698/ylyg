@@ -1,0 +1,110 @@
+﻿var layerWin = document.getElementById("repalylayer");
+$("div.Win_overlay").css("height", document.documentElement.offsetHeight + "px");
+var ft = parseInt(document.documentElement.scrollTop - ((document.documentElement.clientHeight - layerWin.offsetHeight) / 2));
+layerWin.style.top = ft + "px";
+var flag = 0;
+var speed = 10;
+var acc = 2;
+var ParentID;
+
+function move() {
+    //var t = layerWin.style.top;
+    //var top = parseInt(t.substring(0, t.length - 2));
+    var myhigh = parseInt(document.documentElement.scrollTop - ((document.documentElement.clientHeight - layerWin.offsetHeight) / 2));
+    //if (top < myhigh - speed) { layerWin.style.top = top + speed + "px"; }
+    //else if (top > myhigh + speed) { layerWin.style.top = top - speed + "px"; }
+    layerWin.style.top = myhigh + "px";
+    setTimeout("move()", 2);
+}
+
+function scall() { if (flag == 0) { move(); flag = 1; } }
+
+window.onscroll = scall;
+
+function closerepaly() {
+    $(layerWin).hide();
+    $("div.Win_overlay").hide();
+}
+
+
+function Publish(id) {
+    if ((typeof (window.CurrentUser) == "undefined") || (window.CurrentUser == null)) {
+        alert("当前不允许未登录评论,请登录并实名形式评论");
+        return;
+    }
+    var content = $("#CommentTextarea").val();
+    if (content.length == 0) {
+        alert("请输入评论内容！");
+        return;
+    }
+    if (content == "在此发表评论！") {
+        alert("请输入评论内容！");
+        return;
+    }
+    if (content.length >= 4000) {
+        alert("评论内容不大于500个字符！");
+        return;
+    }
+    var params = {};
+    params.ToID = id;
+    params.CommentType = CommentType;
+    params.Content = content,
+    $.post("/Comment.Add.data", params, function (data) {
+        alert(data);
+        location.reload();
+    });
+}
+
+
+var ToID;
+function PreRepaly(parentID, toID) {
+    ParentID = parentID;
+    ToID = toID;
+    $(layerWin).show();
+    $("#repalycontent").focus();
+    $("div.Win_overlay").show();
+}
+
+
+
+function RelComment() {
+    var Content = $("#repalycontent").val();
+    if (Content.length < 2 || Content.length > 4000) {
+        alert("评论字数请控制在2-2000中文或4-4000个英文之间");
+        return;
+    }
+    $("#RelCommentButton").attr('disabled', 'disabled');
+    var params = {};
+    params.ToID = ToID;
+    params.CommentType = CommentType;
+    params.Content = Content;
+    params.ParentID = ParentID;
+    params.NickName = true;
+    $.post("/Comment.Add.Data", params, function (data) {
+        alert(data);
+        location.reload();
+    });
+}
+
+function Support(id) {
+    $.post("/Comment.Support.data", { ID: id }, function (data) {
+        alert(data);
+        location.reload();
+    });
+}
+
+function Against(id) {
+    $.post("/Comment.Against.data", { ID: id }, function (data) {
+        alert(data);
+        location.reload();
+    });
+}
+
+function Del(id) {
+    if (confirm("确定要删除该条评论")) {
+        $.post("/Comment.Del.data", { ID: id }, function () {
+            alert("删除成功");
+            location.reload();
+        });
+    }
+}

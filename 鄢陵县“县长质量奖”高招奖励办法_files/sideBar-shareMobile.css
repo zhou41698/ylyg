@@ -1,0 +1,23 @@
+.float { font-family:"microsoft Yahei"; position:fixed; right:0px;}
+.share-mobile { top: 55%; z-index:99999; width:106px;}
+.share-mobile p.quick-response { text-align:center; font-size:14px; color:#fff; padding:10px 0; position:relative; z-index:2;}
+.share-mobile p.quick-response img { width:90px; height:90px; margin:0 auto 6px; display:block; padding:0; border:1px solid #fff;}
+.share-mobile .mat { position:absolute; z-index:1; width:100%; height:100%; background:#252d33; opacity:0.85; top:0; left:0;}
+
+/********************* 尺寸兼容 *********************/
+@media screen and (max-width: 1440px) {
+  .share-mobile { width:106px;}
+  .share-mobile p.quick-response { font-size:14px;}
+  .share-mobile p.quick-response img { width:90px; height:90px;}
+}
+
+/*侧边广告栏*/
+    .abSide { position:fixed; right:0; bottom:0; z-index:1000; background-color:#666; transition:bottom 0.3s ease; -moz-transition:bottom 0.3s ease; -webkit-transition:bottom 0.3s ease; -o-transition:bottom 0.3s ease;}
+    .abSide.right { right:0px;}
+    .abSide.bottom { bottom:0;}
+    .abSide .adPart { display:block; z-index:1; cursor:pointer; box-shadow:0px 0px 5px #666; position:relative;}
+    .abSide .adPart:after { content:""; position:absolute; top:0; left:0; display:block; border:3px solid rgba(41,0,0,0.4); width:calc(100% - 6px); height:calc(100% - 6px); opacity:0; transition:opacity 0.2s ease; -moz-transition:opacity 0.2s ease; -webkit-transition:opacity 0.2s ease; -o-transition:opacity 0.2s ease;}
+    .abSide:hover .adPart:after { opacity:0.8;}
+
+    .abSide .close { position:absolute; top:3px; right:3px; width:28px; height:28px; line-height:24px; text-align:center; color:#fff; cursor:pointer; font-family:Arial, sans-serif; font-size:16px; z-index:2;}
+    .abSide .close:hover { background-color:rgba(41,0,0,0.4);}

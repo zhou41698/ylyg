@@ -1,0 +1,10 @@
+function MakePreView() {
+    $.post("/PortalResource.MakePreView.data", { ID: ID, ResourceColumnID: ResourceColumnID }, function (html) {
+        if (html == "1")
+            location = location;
+        else {
+            setTimeout(function () { MakePreView(); }, 10000);
+        }
+    });
+
+}

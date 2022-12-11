@@ -1,0 +1,373 @@
+$(document).ready(function () {
+    setTimeout(function () { catalogHeight() }, 1000);
+    // 树目录
+    $("ul.treeview").treeview({
+        //collapsed: true, //页面加载时树目录收拢，单独设置收拢 class="closed"，单独设置展开 class="open"
+        control: ".tree-control",
+        animated: "fast"
+    });
+
+    //树目录收起与展开动作
+    $(".tree-control a").on("click", function () {
+         
+        $(this).parent().children("a").show();
+        $(this).hide();
+    });
+
+    //$("ul.treeview a").click(function (e) {
+    //    //alert($(this).attr("pid"))
+    //    $("ul.treeview a").removeClass("on");
+    //    $(this).addClass("on");
+
+    //     
+    //    e.preventDefault()
+    //    var result = $(this).attr("pid");
+    //    Resource.GetInfo(result)
+        
+    //})
+
+    $("#treeview a").click(function (e) {
+        //alert($(this).attr("pid"))
+        $("ul.treeview a").removeClass("on");
+        $(this).addClass("on");
+
+        e.preventDefault()
+        var result = $(this).attr("pid");
+        //Resource.GetInfo(result)
+
+        
+        
+        getData(1, result);
+    })
+
+    $("#treeviewList").on("click", "a", function () {
+
+        $("div.path").find("span").text($(this).text())
+        //alert($("div.path").find("span").text($(this).text()));
+
+        $(window).scrollTop(0);
+        $("#treeviewList a").removeClass("on");
+        $(this).addClass("on");
+        var result = $(this).attr("id");
+        $.post("/PortalResource.LoadView.data", { "ParentID": result }, function (data) {
+            $("#MinContent").html("");
+            $("#MinContent").html(data);
+        });
+    });
+    
+    
+
+    InitPage();
+
+
+    var winH = $(window).height();//页面可视区域高度
+    //定义鼠标滚动事件
+    var totalheight = 0;//定义一个总的高度变量
+    $("#treeboxList").scroll(function () {
+        
+        if (load) return;
+        totalheight = parseFloat($("#treeboxList").height()) + parseFloat($("#treeboxList").scrollTop());//浏览器的高度加上滚动条的高度
+        if (totalheight >= $("#treeviewList").height() ) //当文档的高度小于或者等于总的高度的时候，开始动态加载数据
+        {
+
+            load = 1;
+            PageIndex++;
+            InitPage();
+            
+
+        } else {
+            //console.log($("#treeviewList").height(), totalheight)
+        }
+
+    });
+})
+
+
+Resource = {
+    GetInfo: function (data) {
+        $.post("/PortalResource.LoadInfo.data", { "ParentID": data }, function (result) {
+            if (result.length > 0) {
+                 
+                $("#ResourceInfo").html("");
+                $("#ResourceInfo").html(result);
+                return false;
+            }
+        });
+    }
+}
+
+//方法：目录栏高度校准
+//function catalogHeight() {
+//    var winH = $(window).height();
+//    var headTopH = $(".head_top").outerHeight(true);
+//    var boxTopH = $(".w3>.box>.box_top").outerHeight(true);
+//    var boxBotH = $(".w3>.box>.box_bottom").outerHeight(true);
+//    var footH = $(".foot").outerHeight(true);
+//    $(".catalog-tree-box").css({ maxHeight: winH - headTopH - boxTopH - boxBotH - footH - 85 });
+//    $(".catalog-tree-box").parents(".box").pin({
+//        //containerSelector: ".w3",
+//        top: headTopH + 8
+//    });
+//}
+
+
+function catalogHeight() {
+    var winH = $(window).height();
+    var headTopH = $(".head_top").outerHeight(true);
+    var boxTopH = $(".w3>.box>.box_top").outerHeight(true);
+    var boxBotH = $(".w3>.box>.box_bottom").outerHeight(true);
+    var footH = $(".foot").outerHeight(true);
+    $(".catalog-tree-box").css({ maxHeight: winH - headTopH - boxTopH - boxBotH - footH - 25 });
+    $(".catalog-tree-box").parents(".box").pin({
+        //containerSelector: ".w3",
+        top: headTopH + 8
+    });
+}
+
+var IfLoad = true;//是否继续滚动加载数据(动态)
+var PageSize = 10;//设置每页显示的数据条数
+var PageIndex = 1;//设置当前页数，全局变量
+var p = 0, t = 0; // 顶部和底部的距离
+var load = 0;
+
+
+//加载资源推荐数据得函数
+function InitPage() {
+    IfLoad = true;
+    load = 0;
+    PageIndex = PageIndex || 1;//页码自动增加，保证下次调用时为新的一页
+    if (PageIndex == 1) {
+        $(window).scrollTop(0);
+    }
+
+    $.ajax({
+        url: "/PortalResource.GetInfo.data",
+        type: "post",
+        data: { "PageSize": 10, "PageIndex": PageIndex, "ResourceColumnID": window.ResourceColumnID, "ID": window.ID },
+        dataType: "json",
+        success: function (data) {
+            //debugger;
+            //$(".btnBar").hide()
+            $("#loaddiv").hide();
+
+            
+
+            if (data.length > 0) {
+                var jsonObj = data;
+                InsertHtml(jsonObj);
+
+                $("#loaddiv").show().text("数据已加载完");
+            }
+            else {
+              
+                //$(".btnBar").show();
+                $("#loaddiv").show().text("数据已加载完");
+
+                
+            }
+        },
+        beforeSend: function () {
+            //$(".btnBar").show();
+            $("#loaddiv").show().text("正在加载中。。。");
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            //$(".btnBar").hide()
+            $("#loaddiv").hide();
+            console.log("请求数据失败,XMLHttpRequest 对象:" + JSON.stringify(XMLHttpRequest) + ",  错误信息:" + textStatus + ", 捕获的错误对象:" + errorThrown);
+        }
+    });
+}
+
+
+var str = window.location.href;
+var index = str.lastIndexOf("\/");
+str = str.substring(index + 1, str.length);
+var resultInfo = str.split(".")[0];
+
+
+
+
+//生成数据html
+function InsertHtml(json) {
+    var $mainDiv = $("#treeviewList")
+    var html = '';
+
+    for (var i = 0; i < json.length; i++) {
+
+        //if (resultInfo == json[i].ID) {
+        //    html += '<li class="last">';
+        //    //html += '<a  href="/PortalResource/' + json[i].ID + '.shtml" title="' + json[i].Title + '"">' + json[i].Title + '</a><i></i>';
+        //    html += '<a class="on" id="' + json[i].ID + '" title="' + json[i].Title + '"">' + json[i].Title + '</a><i></i>';
+        //    html += '</li>';
+        //}
+        //else {
+        //    html += '<li class="last">';
+        //    //html += '<a  href="/PortalResource/' + json[i].ID + '.shtml" title="' + json[i].Title + '"">' + json[i].Title + '</a><i></i>';
+        //    html += '<a id="' + json[i].ID + '" title="' + json[i].Title + '"">' + json[i].Title + '</a><i></i>';
+        //    html += '</li>';
+        //}
+
+        html += '<li class="last">';
+        //html += '<a  href="/PortalResource/' + json[i].ID + '.shtml" title="' + json[i].Title + '"">' + json[i].Title + '</a><i></i>';
+        html += '<a id="' + json[i].ID + '" title="' + json[i].Title + '"">' + json[i].Title + '</a><i></i>';
+        html += '</li>';
+        
+    }
+    //$mainDiv.append(html);
+
+    $("#ower").show();
+    $("#ower").after(html);
+
+
+}
+
+
+var curPage = 1; //当前页码
+var total, pageSize, totalPage; //总记录数，每页显示数，总页数
+//$("#PageList").on('click', 'a', function () {
+//    debugger;
+//    var data = $("#treeview a.on").attr("pid");
+//    var rel = $(this).attr("rel");
+//    if (rel) {
+//        getData(rel, data);
+//    }
+//});
+
+function getData(page, data) {
+    //debugger;
+    if (data == "undefined") {
+        data = $("#treeview a.on").attr("pid");
+    }
+    $.ajax({
+        url: '/PortalResource.LoadInfo.data',
+        type: 'POST',
+        data: { 'ParentID': data,'Page':page },
+        beforeSend: function () {
+
+        },
+        success: function (json) {
+            //debugger;
+            var str = '';
+            var obj = JSON.parse(json);
+            if (obj.RowCount!=0) {
+                
+                // console.log(json);
+                total = obj.RowCount;
+                pageSize = 20; //每页显示条数
+                curPage = page; //当前页
+                totalPage = Math.floor((total + pageSize - 1) / pageSize) //总页数
+                //totalPage = total % pageSize == 0 ? total / pageSize : total / pageSize + 1 
+                //var ul = $('#ResourceInfo').find('*').remove();
+                $('#ResourceInfo').html("");
+                str += '<ul>';
+                $.each(obj.List, function (index, array) { //遍历json数据列
+                    //debugger;
+                    str += '<li>';
+                    str += '<div class="doc-list-typeicon"><span class="' + array.GetIcoInfo + '"></span></div>';
+                    str += '<div class="doc-list-title" style="font-size: 15px;font-weight: 800;padding: 13px 20px 3px 0;height: 10px;margin-bottom: 8px;">';
+                    str += '<a href="/PortalResource/' + array.ID + '.shtml" title="' + array.Title + '" target="_blank">' + array.Title + '</a>';
+                    str += '</div>';
+                    str += '<div class="doc-list-comment">';
+                    str += '<div  style="font-size: 15px;padding: 28px 20px 3px 0;height: 10px;margin-bottom: 8px;"><span>' + timeStamp2String(new Date(array.UploadTime)) + '</span>';
+                    str += '</div>';
+                    str += '</li>';
+                });
+                str += '</ul>';
+                //$('#ResourceInfo').append(string);
+                $('#ResourceInfo').html(str);
+            } else {
+                str += '<div class="noMatter" style="height:650px">暂无内容</div>';
+                $('#ResourceInfo').html("");
+                $('#ResourceInfo').html(str);
+            }
+
+        },
+        complete: function () { //生成分页条
+            //debugger;
+            if ($('#ResourceInfo').text() != '暂无内容') {
+                getPageBar();
+            }
+            else {
+                $("#PageList").html("");
+            }
+        },
+        error: function () {
+            alert("数据加载失败");
+        }
+    });
+}
+//获取分页条
+function getPageBar() {
+    //debugger;
+    //$("#PageList").find('*').remove();
+    $("#PageList").html("");
+    pageStr = "";
+    var data = $("#treeview a.on").attr("pid");
+    if (totalPage <= 1)
+        return "";
+    if (curPage > 1) {
+        pageStr += (String.Format("<a href='javascript:void(0)' onclick='getData({0},\"{1}\")' rel='{0}' class='prev' title='上一页'>上一页</a>", (parseInt(curPage) - 1),data));
+
+    }
+    for (var n = curPage - 5; n <= ((curPage > 5) ? (curPage + 5) : (totalPage > 10 ? 10 : totalPage)); n++) {
+        if (n > 0 && n != curPage && n <= totalPage) {
+            //pageStr += "<a onclick='getData(" + n +",'"+data+"')' href='javascript:void(0)' title='转到第"+n+"页' rel='" + n + "'>"+n+"</a>";
+            pageStr += (String.Format("<a href='javascript:void(0)' onclick='getData({0},\"{1}\")' rel='{0}'  title='转到第{0}页'>{0}</a>", n, data));
+
+        }
+        else if (n == curPage) {
+            //pageStr += "<a onclick='getData(" + curPage +",'"+data+"')' href='javascript:void(0)' rel='" + curPage + "' class='current'>" + curPage + "</a>";
+            pageStr += (String.Format("<a href='javascript:void(0)' onclick='getData({0},\"{1}\")' rel='{0}' class='current'>{0}</a>", curPage, data));
+
+        }      
+    }
+    if (curPage < totalPage) {
+        //pageStr += "<a  onclick='getData(" + (parseInt(curPage) + 1) +",'"+data+"')'  title='下一页' href='javascript:void(0)' rel='" + (parseInt(curPage) + 1) + "' class='next'>下一页</a>";
+        pageStr += (String.Format("<a href='javascript:void(0)' onclick='getData({0},\"{1}\")' title='下一页' rel='{0}' class='next'>下一页</a>", (parseInt(curPage) + 1), data));
+
+    }
+    ////页码大于最大页数
+    //if (curPage > totalPage) curPage = totalPage;
+    ////页码小于1
+    //if (curPage < 1) curPage = 1;
+    ////pageStr = "<span>共" + total + "条</span><span>" + curPage + "/" + totalPage + "</span>";
+    //pageStr = "";
+    ////如果是第一页
+    //if (curPage == 1) {
+    //    pageStr += "<span>首页</span><span>上一页</span>";
+    //} else {
+    //    pageStr += "<span><a href='javascript:void(0)' rel='1'>首页</a></span><span><a href='javascript:void(0)' rel='" + (curPage - 1) + "'>上一页</a></span>";
+    //}
+
+    ////如果是最后页
+    //if (curPage >= totalPage) {
+    //    pageStr += "<span>下一页</span><span>尾页</span>";
+    //} else {
+    //    pageStr += "<span><a href='javascript:void(0)' rel='" + (parseInt(curPage) + 1) + "'>下一页</a></span><span><a href='javascript:void(0)' rel='" + totalPage + "'>尾页</a></span>";
+    //}
+    ////$("#PageList").append(pageStr);
+    $("#PageList").html(pageStr);
+}
+
+
+function timeStamp2String(time) {
+    var datetime = new Date();
+    datetime.setTime(time);
+    var year = datetime.getFullYear();
+    var month = datetime.getMonth() + 1 < 10 ? "0" + (datetime.getMonth() + 1) : datetime.getMonth() + 1;
+    var date = datetime.getDate() < 10 ? "0" + datetime.getDate() : datetime.getDate();
+    var hour = datetime.getHours() < 10 ? "0" + datetime.getHours() : datetime.getHours();
+    var minute = datetime.getMinutes() < 10 ? "0" + datetime.getMinutes() : datetime.getMinutes();
+    var second = datetime.getSeconds() < 10 ? "0" + datetime.getSeconds() : datetime.getSeconds();
+    return year + "-" + month + "-" + date + " ";
+}
+String.Format = function () {
+    if (arguments.length == 0)
+        return null;
+    var str = arguments[0];
+    for (var i = 1; i < arguments.length; i++) {
+        var re = new RegExp('\\{' + (i - 1) + '\\}', 'gm');
+        str = str.replace(re, arguments[i]);
+    }
+    return str;
+};

@@ -1,0 +1,62 @@
+.treeview, .treeview ul { 
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}
+
+.treeview div.hitarea 
+{
+	height: 15px;
+	width: 15px;
+	margin-left: -15px;
+	float: left;
+	cursor: pointer;
+}
+/* fix for IE6 */
+* html .treeview div.hitarea {
+	display: inline;
+	float:none;
+}
+
+.treeview li { 
+	margin: 0;
+	padding: 2px 0pt 2px 16px;
+}
+
+.treeview a.selected {
+	background-color: #eee;
+}
+
+#treecontrol { margin: 1em 0; }
+
+.treeview .hover { color: red; cursor: pointer; }
+
+.treeview li { background: url(treeview/tv-item.gif) 0 -1px no-repeat; }
+.treeview .collapsable { background-image: url(treeview/tv-collapsable.gif); }
+.treeview .expandable { background-image: url(treeview/tv-expandable.gif); }
+.treeview .last { background-image: url(treeview/tv-item-last.gif); }
+.treeview .lastCollapsable { background-image: url(treeview/tv-collapsable-last.gif); }
+.treeview .lastExpandable { background-image: url(treeview/tv-expandable-last.gif); }
+
+
+.treeview a { display:inline-block; height:20px; line-height:20px; overflow:hidden; text-indent:2px; padding-right:2px; _margin-left:15px;}
+.treeview .active a{ font-weight:bold}
+.treeview .active a{color:Red}
+
+.treeview .active ul a{ font-weight:normal}
+.treeview .active ul a{color:#333333}
+.treeview input {float: left; line-height:30px;margin: 0 5px;}
+
+.treeview a { padding-right:3px; overflow:hidden;}
+.treeview li ul li a { display:inline-block; height:20px; line-height:20px; overflow:hidden; text-indent:3px; _margin-left:0px;}
+.treeview li ul li a:hover { color:#333; background:#e6ffd4; text-decoration:none;}
+
+.treeSelected, .treeSelected:hover, #tree li ul li a.treeSelected:hover { color:#ffffff; background:#44791b; /*background:#4d8ce3 url(../images/icon_tree_point.png) no-repeat right -22px;*/}
+
+.filetree li { padding: 3px 0 0 16px;}
+.filetree span.folder, .filetree span.file { padding-left:18px; display:block; height:20px; line-height:20px;}
+.filetree span.folder {  background:url(treeview/folder.gif) no-repeat 0 2px; cursor: pointer; }
+.filetree li.expandable span.folder { background: url(treeview/folder-closed.gif) no-repeat 0 2px; }
+.filetree li a:hover { color:#333; background:#e6ffd4; text-decoration:none;}
+.treeview li span.folder a, .treeview li ul li span.folder a { text-indent:1px; padding-right:1px; height:20px; line-height:18px; overflow:hidden;}
+.filetree span.file { background:url(treeview/file.gif) no-repeat 0 2px; cursor: pointer; }

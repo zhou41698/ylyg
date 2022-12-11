@@ -1,0 +1,52 @@
+@charset "utf-8";
+/*72*/
+/*@import url("box.css");*/
+
+body,ul,li,p,h1,h2,h3,h4,h5,form { font-family:Arial, "微软雅黑";}
+body { background:#fff;}
+
+/* Head */
+.head .head_logo { background:url(Logo.jpg) no-repeat center bottom;}
+/*.head .theme-default .nivoSlider { padding-bottom:22px;}*/
+
+
+/* Login */
+/*.login{ padding:0;}
+	.login_in{background:url(images/login_bg.gif) no-repeat;}
+	.login_tit{color:#555; padding-left:12px; font-size:14px; line-height:32px; font-weight:bold}*/
+	.user_inf{color:#333}
+		.user_inf input{border:1px solid #ccc;}
+		.userlink{color:#5B7193;}
+		.userlink a {color:#5B7193}
+	.login_head{color:#333;}
+	.load{background:url(images/loading.gif) no-repeat center;}
+	
+/* Flash */
+/*.flashad{border:1px solid #5B7193; background:#fff; padding:1px; height:200px;}
+	.flash{ padding:0; height:200px;}*/
+
+.path { margin-bottom:10px;}
+	
+/*BBS*/
+	.club_tab tr{ background:#fff;}
+	.club_tab th, .box_mid .club_tab th { background:#013475; color:#fff; font-weight:bold;}
+	
+/* Foot */
+    .floor { padding-top:30px;}
+    .foot { margin-bottom:0; width:100%; background-color:#f7f7f7; border-top:5px solid #013475;}
+	.foot_nav { height:35px; line-height:32px; text-align:center; color:#fff; width:100%; position:relative;}
+	    .foot_nav_in { height:31px; margin:0 auto; position:relative; font-size:0; top:20px; display:inline-block;}
+		.foot_nav_in a { color:#333; font-size:14px; width:auto; height:31px; text-align:center; padding:0 10px; display:inline-block; overflow:hidden;}
+		.foot_nav_in a:hover { color:#013475; text-decoration:underline;}
+	.footCnt { padding:20px 0 10px; width:100%;}
+		
+
+
+
+
+
+
+
+
+
+

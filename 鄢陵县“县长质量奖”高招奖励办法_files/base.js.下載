@@ -1,0 +1,126 @@
+﻿if ($(".info").len > 0 && !$(".info").html().contains("认证状态")) {
+    $(".info").find("br").eq(2).before(" <span style='margin-left:10px'>认证状态：<span style='color:Red;font-size:13px;'>" + (window.Author ? "已认证" : "未认证") + "</span></span>");
+}
+
+function SetHome(obj) {
+    try {
+        obj.style.behavior = 'url(#default#homepage)';
+        obj.setHomePage(window.location.href);
+    }
+    catch (e) {
+        alert("你需要手动把本站设置为首页！");
+
+    }
+}
+
+
+function AddFavorite(sUrl, sTitle) {
+    try {
+        window.external.addFavorite(sUrl, sTitle);
+    }
+    catch (e) {
+        try {
+            window.sidebar.addPanel(sTitle, sUrl, "");
+        }
+        catch (e) {
+            alert("Ctrl+D 把本页加入收藏！");
+        }
+    }
+}
+
+
+
+$(".box_top_tab li").bind("mouseover", function () {
+    $(this).parent().find("li").removeClass("on");
+    $(this).addClass("on");
+    var index = $(this).parent().find("li").index($(this));
+    $(this).parent().next().find("div.box_cm>div").hide().eq(index).show();
+});
+
+
+$(".tab_list li").bind("mouseover", function () {
+    if ($(this).parent().attr("isClass") == "true") {
+    } else {
+        $(this).parent().find("li").removeClass("on");
+        $(this).addClass("on");
+        var index = $(this).parent().find("li").index($(this));
+        $(this).parent().parent().parent().next().find("div.box_cm>div").hide().eq(index).show();
+    }
+});
+
+
+
+$("#bigarticle li").unbind("mouseover").bind("onclick", function () {
+    $(this).parent().find("li").removeClass("on");
+    $(this).addClass("on");
+});
+
+
+function errorLoad(obj, src) {
+    if (obj.src != src){ obj.src = src; }
+}
+function errorLoad(obj, src, className) {
+    if (obj.src != src) {
+        obj.src = src;
+        $(obj).addClass(className);
+    }
+}
+
+function botHiliteSwitch() {
+    if (!$.support.leadingWhitespace || navigator.userAgent.indexOf("MSIE 9.0") > 0) {
+        if ($("body").hasClass("botHiliteHide")) {
+            $("div.page>.botBuoy>.botHilite, div.page>.botBuoy").animate({ height: "86px" }, 300);
+            $("div.page>.botBuoy>.ca-switch>a").animate({ marginBottom: "-82px", opacity: 0 }, 500, function () {
+                $("body").removeClass("botHiliteHide");
+            });
+        } else {
+            $("div.page>.botBuoy>.botHilite, div.page>.botBuoy").animate({ height: 0 }, 300);
+            $("div.page>.botBuoy>.ca-switch>a").animate({ marginBottom: "50px", opacity: 1 }, 300, function () {
+                $("body").addClass("botHiliteHide");
+            });
+        };
+    } else {
+        if ($("body").hasClass("botHiliteHide")) {
+            $("body").removeClass("botHiliteHide");
+        } else {
+            $("body").addClass("botHiliteHide");
+        };
+    };
+}
+
+$("#Domain").html(window.location.host);
+
+
+var ShowAdMeter;
+ShowAd = {
+    Init: function () {
+        ShowAdMeter = setInterval("ShowAd.adFloat()", 10);
+    },
+    adFloat: function () {
+        var adFloat1 = document.getElementById('adFloat1');
+        var adFloat2 = $("#adFloat2");
+        var sNewTop = document.body.scrollTop + document.documentElement.scrollTop;
+        if (adFloat1.offsetTop != sNewTop + 100) {
+            var dy = (sNewTop + 100 - adFloat1.offsetTop) * 0.1;
+            dy = (dy > 0 ? 1 : -1) * Math.ceil(Math.abs(dy));
+            adFloat1.style.top = adFloat1.offsetTop + dy + 'px';
+
+            adFloat2.css("top", (adFloat1.offsetTop + dy) + "px");
+        }
+    },
+    closeFloat: function () {
+        $("#adFloat_Couplet").remove();
+        clearInterval(ShowAdMeter);
+    }
+};
+
+
+
+//二维码
+var erweima = ["24ef6b51-00ca-4aab-888c-df738569a22f"];
+for (var i = 0; i < erweima.length; i++) {
+    if (erweima[i].toString() == window.UnitID.toString()) {
+        $("div.QRCodeApp").remove();
+    }
+}
+

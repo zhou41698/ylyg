@@ -1,0 +1,1 @@
+var Img=new Image();Img.src='http://tongji.30edu.com.cn/S.aspx?UnitID='+UnitID+'&URL='+encodeURIComponent(location)+'&referrer='+encodeURIComponent(document.referrer)+'&width='+window.screen.width+'&height='+window.screen.height;

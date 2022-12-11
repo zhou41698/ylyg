@@ -1,0 +1,124 @@
+@charset "utf-8";
+/*80*/
+
+/*nav*/
+.menuBar .menuStyle { background:#013475;}
+.single .core { height:50px}
+.head_menu { line-height:50px;}
+.head_menu li { float:left; height:50px; text-align:center; margin:0; margin-right:5px; width:auto;}
+.head_menu li a { display:block; height:50px; line-height:50px; color:#fff; font-size:17px; width:auto;}
+.head_menu li a:hover{ text-decoration:underline;}
+.head_menu li.hover,
+.head_menu li.active { background:#114a93;}
+.head_menu li.hover a,
+.head_menu li.active a { color:#fff;}
+.head_menu li.hover > a:hover,
+.head_menu li.active > a:hover { color:#fff;}
+
+.head_menu ul { width:100%; display:none; background:#fff; border-top-width:0; position:absolute; z-index:300; margin-left:0; margin-top:0; *margin-left:-36px; _margin-left:-36px; }
+.head_menu li.hover > ul { display:block;}
+.head_menu ul li { height:31px; line-height:31px; border-top:1px solid #ecf6fd; border-bottom:1px solid #fff; margin-right:0; width:auto;}
+.head_menu ul li a { height:31px; line-height:31px; width:80px; text-align:center; margin:0 auto;}
+
+.head_menu .menu-ul>li,
+.head_menu .menu-ul-sub ul li { border-bottom:1px solid #d4ecff;}
+
+.head_menu .menu-ul li a,
+.head_menu li.hover ul ul a, 
+.head_menu li.hover ul ul a:hover, 
+.head_menu li.active ul ul a,
+.head_menu li.active ul ul a:hover {color:#114a93;}
+.head_menu li.hover ul li.on { background:#f3f7fb; border-top:1px solid #e7f4fe; border-bottom:1px solid #ecf6fd;}
+
+.double .core { height:50px;}
+
+.mini li.hover, .mini li.active { background-position:0px -32px;}
+.mini li ul { margin-top:-3px; margin-left:0; *margin-left:-31px;}
+.mini li ul li { background-position:-103px -31px;}
+
+.mini .single { height:50px;}
+.mini .single .head_menu>li { margin-top:0px;}
+.mini .single .head_menu li.logo { padding-top:3px; margin-top:0;}
+.mini .double .head_menu li.logo { padding-top:6px;}
+
+/*横向二级导航*/
+.head_menu.evenline li ul,
+.mini .head_menu.evenline li ul{ width:auto;}
+.head_menu.evenline ul li,
+.head_menu.evenline ul li a { height:49px; line-height:49px;}
+.head_menu.evenline .menu-ul li a { line-height:49px;}
+.head_menu.evenline .menu-ul>li { border-bottom:none;}
+.head_menu.evenline li ul li { padding-left:0;}
+.head_menu.evenline li ul li:last-child { margin-right:0;}
+
+/*third nav*/
+.head_menu span.sub { background-image:url(images/arrows.png); right:3px; top:3px;}
+.head_menu.evenline span.sub { background-image:url(images/arrows.png); right:3px; top:12px;}
+.head_menu .menu-ul-sub ul { background:#f3f7fb; border:1px solid #9dbedf;}
+
+.head .head_menu .menu-ul-sub ul li,
+.head .head_menu .menu-ul-sub ul li a { background-image:none;height:31px;line-height:31px;}
+.head .head_menu.evenline .menu-ul li .menu-ul-sub a { line-height:31px;}
+
+.menuBar .head_menu { padding-left:0;}
+
+.mini .head_menu li { margin-right:2px;}
+.mini .evenline li ul { margin-top:0;}
+.mini .evenline li ul li { padding:0;}
+.mini .evenline li.hover .menu-ul-sub { left:-2px;}
+
+.mini .head_menu li.logo img { width:100px;}
+.mini .double .head_menu li.logo { padding-top:3px; margin-top:0;}
+.mini .full_screen .head_menu li.logo { width:110px;}
+
+/*主导航标签宽度*/
+
+/*固定宽度*/
+.head_menu li,
+.head_menu ul,
+.head_menu ul li,
+.head_menu.evenline li .menu-ul>li { width:103px;}
+.head_menu.evenline .menu-ul-sub ul, 
+.head_menu.evenline .menu-ul-sub li { width:101px;}
+
+.head_menu li a { width:98px;}
+.head_menu ul li a { width:80px;}
+
+/*三级栏目定位*/
+.head_menu.evenline li.hover .menu-ul-sub { left:0;}
+.head_menu.evenline li.hover li:first-child.on .menu-ul-sub { left:0;}
+
+
+/*主导航显示小logo的mini尺寸*/
+.mini .head_menu li,
+.mini .head_menu li ul,
+.mini .head_menu li ul li,
+.mini .head_menu.evenline li ul li,
+.mini .head_menu.evenline .menu-ul-sub { width:96px;}
+.mini .head_menu.evenline .menu-ul-sub li { width:94px; margin-right:0;}
+
+/*显示小logo的mini尺寸 - 三级栏目定位*/
+.mini .head_menu.evenline li.hover .menu-ul-sub { left:0;}
+.mini .head_menu.evenline li.hover li:first-child.on .menu-ul-sub { left:0;}
+
+
+/*单行栏目可显示长文字*/
+.long-text .head_menu li, 
+.long-text .head_menu ul, 
+.long-text .head_menu ul li, 
+.long-text .head_menu.evenline li .menu-ul > li,
+.long-text .head_menu.evenline .menu-ul-sub ul, 
+.long-text .head_menu.evenline .menu-ul-sub li,
+.mini .long-text .head_menu li { width:auto;}
+
+.long-text .head_menu li a, 
+.mini .long-text .head_menu li a { width:auto; padding:0 14px; white-space:nowrap; text-align:left;}
+.long-text .head_menu ul,
+.mini .long-text .head_menu ul {width: auto;}
+.long-text .head_menu ul li,
+.mini .long-text .head_menu ul li { margin-top:0; margin-right:0; float:none; display:block;}
+
+.long-text .evenline .menu-ul > li,
+.mini .long-text .evenline .menu-ul > li { float:left;}
+.long-text .evenline .menu-ul li .menu-ul-sub a { padding:0 13px;}
+

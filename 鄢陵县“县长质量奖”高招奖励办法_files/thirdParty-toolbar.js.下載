@@ -1,0 +1,54 @@
+﻿// JavaScript Document
+$(document).ready(function(){
+    var html = [];
+    html.push("<a href=\"javascript:void(0)\" class=\"QQ\" title=\"QQ帐号登录\" onclick=\"top.open('http://sso.30edu.com.cn/qq.aspx', 'TencentLogin', 'width=450,height=320,menubar=0,scrollbars=0, status=0,titlebar=0,toolbar=0,location=0')\"><i></i>QQ帐号登录</a>");
+    html.push("<a href=\"javascript:void(0)\" class=\"weixin\" title=\"使用微信扫码登录\" onclick=\"top.open('http://sso.30edu.com.cn/weixin.do', 'TencentLogin', 'width=450,height=520,menubar=0,scrollbars=0, status=0,titlebar=0,toolbar=0,location=0')\"><i></i>使用微信扫码登录</a>");
+    //html.push("<a href=\"javascript:void(0)\" id=\"QrCode\" class=\"QrCode\" title=\"手机扫码登陆\" onclick=\"QrCode();return false;\"><i></i>使用善见云校扫码登录</a>");
+    $('.thirdParty').html( html.join(""));
+});
+
+QrCodehtml = '<div id="yxAPP-Code-Login" class="third-dilogbag">'
+           + '<div class="dilogbag-close" onclick="closeDilogDag();"><i></i></div>'
+           + '<img id="imgCode" src="http://appconfig.30edu.com.cn/img.do?url={&quot;type&quot;: 1,&quot;code&quot;: &quot;DLVLYZADP1RY&quot;}" width="180" height="180">'
+           + '<h3>请使用善见云校app扫描登录</h3>'
+           + '<p><span><i class="lef"></i>手机扫码安全登录<i class="rig"></i></span></p>'
+           + '</div>'
+           + '<div class="layer-dilogbag"></div>';
+
+function QrCode() {
+	if($(".QrCode").closest(".sns_body").length == 0){
+	    $("body").append(QrCodehtml);
+		pagdoc = $(document);
+        local = $("#yxAPP-Code-Login");
+        layer = $(".layer-dilogbag")
+	} else {
+	    $("body", window.parent.document).append(QrCodehtml);
+        pagdoc = $(window.parent.document);
+		local = $("#yxAPP-Code-Login", window.parent.document);
+        layer = $(".layer-dilogbag", window.parent.document);
+	}
+	var bagH = local.height();
+	var bagW = local.width();
+	local.css({marginLeft:-bagW/2, marginTop:-bagH/2});
+	local.fadeIn(180,function(){
+		pagdoc.bind("click",function(e){
+			var target  = $(e.target);
+			if(target.closest("#yxAPP-Code-Login").length == 0){
+				local.fadeOut(180,function(){
+					$(this).remove();
+				});
+				layer.fadeOut(180,function(){
+					$(this).remove();
+				});
+				$(document).unbind("click");
+			}
+		});
+	});
+	layer.fadeIn(180);
+};	 
+
+function closeDilogDag() {
+    $("#yxAPP-Code-Login, .layer-dilogbag").fadeOut(180,function(){
+		$(this).remove();
+	});
+};

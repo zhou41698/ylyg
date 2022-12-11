@@ -1,0 +1,105 @@
+﻿
+ArticleViewPage = {
+    DownFile: function (id) {
+        $.post("/ArticleManage.SeeFile.data", { "ID": id }, function (data) {
+            if (data.Success)
+                window.location.href = data.RetUrl;
+            else
+                alert("路径错误！");
+        }, "json");
+    }
+}
+$(".pageNum").find("a").click(function () {
+    var me = this;
+    var $ul = $(me).parent();
+    $(me).parent().find("a").removeClass("current");
+    var pageindex = $(me).attr("pageindex");
+    var allpage = $(me).attr("allpage");
+    $(".conts").find("div[page]").hide().eq(parseInt(pageindex) - 1).show();
+    $ul.find("a").eq(0).html("第" + pageindex + "/" + allpage + "页");
+    if (pageindex == 1 || (pageindex == allpage)) {
+        if (pageindex == 1) {
+            $ul.find("a").eq(2).addClass("current");
+        }
+        else if (pageindex == allpage) {
+            $ul.find("a").eq(parseInt(allpage) + 1).addClass("current");
+        }
+    }
+    else {
+        $(me).addClass("current");
+    }  
+});
+
+
+$(function () {
+    $("div.conts font").each(function (i, o) {
+        //字体大小和字号对映关系
+        var fontSize = [36, 24, 18, 16, 14, 12, 10];
+        //是否设置了字体大小
+        var onSize = $(o).is("[size]");
+        if (onSize) {
+            //有设置
+            var size = 7 - parseInt($(o).attr("size"));
+            //console.log(size);
+            $(o).css("font-size", fontSize[size] + "px");
+        } else {
+            //继承上级
+            $(o).css("font-size", "inherit");
+        }
+    });
+    $(".conts p.MsoNormal").each(function (i, o) {
+        $(o).css("padding", "0px");
+        $(o).find("a>img").each(function (m, t) {
+            $(t).parent().css("padding", "0px");
+        });
+    });
+});
+
+//针对用户在 手机端查看 PC端的这一文章详情页面，对于文章中插入的七牛云.mp4视频，做封面显示播放
+$(function () {
+
+    var videos = document.getElementsByTagName('video');
+    for (var i = 0; i < videos.length; i++) {
+        (function () {
+            var p = i;
+            videos[i].addEventListener('play', function () {
+                pauseAll(p);
+            });
+        })()
+    }
+
+    function pauseAll(index) {
+        for (var j = 0; j < videos.length; j++) {
+            if (j != index) videos[j].pause();
+        }
+    }; 
+    //单击播放按钮事件
+    $("div.videoBox .playBtn i").on("click", function () {
+        //alert("哈哈");
+        playPause(this);
+        return false;
+    });
+});
+
+//单击播放事件
+function playPause(sender) {
+    //debugger;
+    var view = $(sender).parent().parent();
+    var videoID = $(sender).parent().parent().next().attr("id");
+    var videoPic = $(sender).parent().parent().find("img");
+    var myVideo = document.getElementById(videoID);
+    $(myVideo).attr({ width: $(videoPic).width(), height: $(videoPic).height() });
+    if (myVideo.paused) {
+        $(view).addClass("playing");
+        $(myVideo).show();
+        myVideo.play();
+    };
+    //$(myVideo).css({marginLeft:-($(myVideo).width())/2, marginTop:-($(myVideo).height())/2});
+    //loading
+    $(view).parent().append('<div class="videoLoading"><i></i></div>');
+    var loading = $(view).parent().children(".videoLoading");
+    myVideo.addEventListener("timeupdate", function () {
+        $(loading).children().fadeOut(300);
+        $(loading).fadeOut(600, function () { $(loading).remove(); });
+    });
+}

@@ -1,0 +1,971 @@
+﻿
+function appMenuShow(sender) {
+    $(sender).addClass("hover");
+}
+
+function appMenuHide(sender) {
+    $(sender).removeClass("hover");
+}
+
+//凤城市教育局特殊处理
+//var isFC = (window.UnitID == "8aabbcfd-4e2a-4aed-a99f-efa7163fd2b6");
+//中国正能量
+var zGZNL = (window.UnitID == 'b27a189b-57b8-4667-bafc-e41e30c12b55') && (window.UnitID == '3e5f8280-5d75-4ea7-8daf-32760e046952');
+//织金瀑布
+var zJPB = (window.UnitID == '4ee8d0c7-5bed-4163-a92b-e84ec262ba9f');
+
+var schoolzz = (typeof (window.SchoolApp.ZZ) != "undefined" && window.SchoolApp.ZZ != null) ? window.SchoolApp.ZZ : "www.30edu.com.cn";
+var schoolkj = (typeof (window.SchoolApp.KJ) != "undefined" && window.SchoolApp.KJ != null) ? window.SchoolApp.KJ : "t.30edu.com.cn";
+var schoolzy = (typeof (window.SchoolApp.ZY) != "undefined" && window.SchoolApp.ZY != null) ? window.SchoolApp.ZY : "z.30edu.com.cn";
+var schooloa = (typeof (window.SchoolApp.OA) != "undefined" && window.SchoolApp.OA != null) ? window.SchoolApp.OA : "oa.30edu.com.cn";
+var schoolzj = (typeof (window.SchoolApp.ZJ) != "undefined" && window.SchoolApp.ZJ != null) ? window.SchoolApp.ZJ : "zujuan.30edu.com.cn";
+var schoolts = (typeof (window.SchoolApp.TS) != "undefined" && window.SchoolApp.TS != null) ? window.SchoolApp.TS : "ebook.30edu.com.cn";
+//var schoolvk = (typeof(window.SchoolApp.VK)!="undefined"&&window.SchoolApp.VK!=null)?window.SchoolApp.VK:"vk.30edu.com";
+var schoolpk = (typeof (window.SchoolApp.PK) != "undefined" && window.SchoolApp.PK != null) ? window.SchoolApp.PK : "paike.30edu.com.cn";
+var schoolsfkt = (typeof (window.SchoolApp.SFKT) != "undefined" && window.SchoolApp.SFKT != null && window.SchoolApp.SFKT != "1") ? "0" : "1";
+//var schoolzd = (typeof (window.SchoolApp.ZD) != "undefined" && window.SchoolApp.ZD != null) ? window.SchoolApp.ZD : "zhidao.30edu.com";
+var schoolvd = (typeof (window.SchoolApp.VD) != "undefined" && window.SchoolApp.VD != null) ? window.SchoolApp.VD : "video.30edu.com.cn";
+var schoolbd = (typeof (window.SchoolApp.BD) != "undefined" && window.SchoolApp.BD != null) ? window.SchoolApp.BD : "form.30edu.com.cn";
+
+var dataResult = CheckDomain();
+
+function InitHeadTop() {
+    var buffer = [];
+    var isLogin = false;
+    buffer.push("<div class=\"top_main\">");
+    if (typeof (window.CurrentUser) != "undefined" && window.CurrentUser != null) {
+        if (dataResult == "true") {
+            buffer.push("  <div class=\"head_link\" style=\"float:left;\">");
+            buffer.push("    <a href=\"http://www.hbeducloud.com/\" target=\"_blank\">湖北教育云</a>");
+            buffer.push("  </div>");
+            if (!zJPB) {
+                buffer.push("  <div class=\"head_link\" style=\"float:right;\">");
+                if (window.UnitID != 'b27a189b-57b8-4667-bafc-e41e30c12b55' && window.UnitID != "3c7e2f64-a4b5-4852-83e6-a6e466dc2754") {
+                    buffer.push("    <a href=\"http://" + schoolzz + "/help/index.shtml\" target=\"_blank\">帮助中心</a>");
+                }
+                buffer.push("</div>");
+            }
+            buffer.push("<div class=\"userBar\" style=\"float:right;\">");
+            buffer.push("  <div class=\"welcome\">您好，<span title='" + window.CurrentUser.TrueName + "'>" + window.CurrentUser.TrueName + "</span><a href=\"javascript:void(0)\" onclick=\"LoginOut()\">[退出]</a></div>");
+            buffer.push("  <span>|</span>");
+            buffer.push("  <a href=\"http://" + schoolkj + "\" target=\"_blank\">个人中心</a>");
+            if (window.CurrentUser.IsManage == "True") {
+                if (window.UnitID != "e28baaee-a2e4-4b0c-a416-c391499f5d79") {
+                    buffer.push("  <span>|</span>");
+                    buffer.push("  <a href=\"http://managewx.30edu.com.cn/manage/?wx=" + window.Account + "\" target=\"_blank\">网校管理</a>");
+                }
+            }
+            //var wxurl = ((window.CurrentUser.StationMaster == "True")) ? "http://wx.30edu.com/manage/main.aspx" : "http://wx.30edu.com";
+
+            if (!zJPB || ((window.UnitID != "c2eee9b4-4a95-49c1-93c1-1258793bfad6") && window.UnitID != "36654838-a0ee-496e-aad5-a33af4575bb3")) {
+                //山东省实验中学 特殊处理
+                buffer.push("  <span>|</span>");
+
+                if (window.UnitID == "3e5f8280-5d75-4ea7-8daf-32760e046952") {
+                    buffer.push("  <div class=\"app\" onmouseover=\"appMenuShow(this);\" onmouseout=\"appMenuHide(this);\" style=\"display:none;\">");
+
+                }
+                else {
+                    buffer.push("  <div class=\"app\" onmouseover=\"appMenuShow(this);\" onmouseout=\"appMenuHide(this);\">");
+
+                }
+               
+                buffer.push("    <a class=\"tabLink\" href=\"javascript:void(0)\">网校应用</a>");
+                buffer.push("    <ul class=\"subMenu\">");
+                buffer.push("      <li>");
+                buffer.push("        <span class=\"xbzy\"></span>");
+                buffer.push("        <a target=\"_blank\" href=\"http://" + schoolbd + "\">表单系统<sup>新！</sup></a>");
+                buffer.push("      </li>");
+                //buffer.push("      <li>");
+                //buffer.push("        <span class=\"oa\"></span>");
+                //buffer.push("        <a target=\"_blank\" href=\"http://office.30edu.com.cn?UnitID=" + window.UnitID + "\">办公ＯＡ<sup>新！</sup></a>");
+                //buffer.push("      </li>");
+                buffer.push("      <li>");
+                buffer.push("        <span class=\"xbzy\"></span>");
+                buffer.push("        <a target=\"_blank\" href=\"http://" + schoolzy + "/?UnitID=" + window.UnitID + "\">教学资源</a>");
+                buffer.push("      </li>");
+                //buffer.push("      <li " + ((schoolsfkt == "1") ? "" : "class=\"dpLast\"") + ">");
+                //buffer.push("      <li>");
+                //buffer.push("        <span class=\"ebook\"></span>");
+                //buffer.push("        <a target=\"_blank\" href=\"http://" + schoolts + "/?UnitID=" + window.UnitID + "\">数字图书</a>");
+                //buffer.push("      </li>");
+                if (schoolsfkt == "1" || schoolsfkt == undefined) {
+                    //buffer.push("      <li>");
+                    //buffer.push("        <span class=\"video\"></span>");
+                    //buffer.push("        <a target=\"_blank\" href=\"http://" + schoolvd + "/?UnitID=" + window.UnitID + "\">教育视频</a>");
+                    //buffer.push("      </li>");
+
+                    buffer.push("      <li>");
+                    buffer.push("        <span class=\"sf\"></span>");
+                    buffer.push("        <a target=\"_blank\" href=\"http://jc.30dao.com/Default.html\">书法网校</a>");
+                    buffer.push("      </li>");
+
+                    buffer.push("      <li >");
+                    buffer.push("        <span class=\"pk\"></span>");
+                    buffer.push("        <a target=\"_blank\" href=\"http://" + schoolpk + "/\">在线排课</a>");
+                    buffer.push("      </li>");
+                }
+                buffer.push("      <li>");
+                buffer.push("        <span class=\"oa\"></span>");
+                buffer.push("        <a target=\"_blank\" href=\"http://" + schooloa + "/?UnitID=" + window.UnitID + "\">办公ＯＡ</a>");
+                buffer.push("      </li>");
+                buffer.push("      <li class=\"dpLast\">");
+                buffer.push("        <span class=\"zj\"></span>");
+                buffer.push("        <a target=\"_blank\" href=\"http://zj.30edu.com.cn/wx.aspx\">在线组卷</a>");
+                //buffer.push("        <a target=\"_blank\" href=\"http://" + schoolzj + "/?UnitID=" + window.UnitID + "\">在线组卷</a>");
+                buffer.push("      </li>");
+
+                buffer.push("    </ul>");
+                buffer.push("  </div>");
+            }
+            buffer.push("</div>");
+
+        }
+        else {
+            buffer.push("<div class=\"userBar\">");
+            buffer.push("  <div class=\"welcome\">您好，<span title='" + window.CurrentUser.TrueName + "'>" + window.CurrentUser.TrueName + "</span><a href=\"javascript:void(0)\" onclick=\"LoginOut()\">[退出]</a></div>");
+            buffer.push("  <span>|</span>");
+            buffer.push("  <a href=\"http://" + schoolkj + "\" target=\"_blank\">个人中心</a>");
+            if (window.CurrentUser.IsManage == "True") {
+                if (window.UnitID != "e28baaee-a2e4-4b0c-a416-c391499f5d79") {
+                    buffer.push("  <span>|</span>");
+                    buffer.push("  <a href=\"http://managewx.30edu.com.cn/manage/?wx=" + window.Account + "\" target=\"_blank\">网校管理</a>");
+                }
+            }
+            //var wxurl = ((window.CurrentUser.StationMaster == "True")) ? "http://wx.30edu.com/manage/main.aspx" : "http://wx.30edu.com";
+
+            if (!zJPB || ((window.UnitID != "c2eee9b4-4a95-49c1-93c1-1258793bfad6") && window.UnitID != "36654838-a0ee-496e-aad5-a33af4575bb3")) {
+                //山东省实验中学 特殊处理
+                buffer.push("  <span>|</span>");
+
+                if (window.UnitID == "3e5f8280-5d75-4ea7-8daf-32760e046952") {
+                    buffer.push("  <div class=\"app\" onmouseover=\"appMenuShow(this);\" onmouseout=\"appMenuHide(this);\" style=\"display:none;\">");
+
+                }
+                else {
+                    buffer.push("  <div class=\"app\" onmouseover=\"appMenuShow(this);\" onmouseout=\"appMenuHide(this);\">");
+
+                }
+               
+                buffer.push("    <a class=\"tabLink\" href=\"javascript:void(0)\">网校应用</a>");
+                buffer.push("    <ul class=\"subMenu\">");
+
+                buffer.push("      <li>");
+                buffer.push("        <span class=\"xbzy\"></span>");
+                buffer.push("        <a target=\"_blank\" href=\"http://" + schoolbd + "\">表单系统</a>");
+                buffer.push("      </li>");
+                buffer.push("      <li>");
+                buffer.push("        <span class=\"xbzy\"></span>");
+                buffer.push("        <a target=\"_blank\" href=\"https://yaohao.30edu.com.cn/default.html\">摇号系统<sup>新！</sup></a>");
+                buffer.push("      </li>");
+                //buffer.push("      <li>");
+                //buffer.push("        <span class=\"oa\"></span>");
+                //buffer.push("        <a target=\"_blank\" href=\"http://office.30edu.com.cn?UnitID=" + window.UnitID + "\">办公ＯＡ<sup>新！</sup></a>");
+                //buffer.push("      </li>");
+                buffer.push("      <li>");
+                buffer.push("        <span class=\"xbzy\"></span>");
+                buffer.push("        <a target=\"_blank\" href=\"http://" + schoolzy + "/?UnitID=" + window.UnitID + "\">教学资源</a>");
+                buffer.push("      </li>");
+                //buffer.push("      <li " + ((schoolsfkt == "1") ? "" : "class=\"dpLast\"") + ">");
+                //buffer.push("      <li>");
+                //buffer.push("        <span class=\"ebook\"></span>");
+                //buffer.push("        <a target=\"_blank\" href=\"http://" + schoolts + "/?UnitID=" + window.UnitID + "\">数字图书</a>");
+                //buffer.push("      </li>");
+                if (schoolsfkt == "1" || schoolsfkt == undefined) {
+                    //buffer.push("      <li>");
+                    //buffer.push("        <span class=\"video\"></span>");
+                    //buffer.push("        <a target=\"_blank\" href=\"http://" + schoolvd + "/?UnitID=" + window.UnitID + "\">教育视频</a>");
+                    //buffer.push("      </li>");
+
+                    buffer.push("      <li>");
+                    buffer.push("        <span class=\"sf\"></span>");
+                    buffer.push("        <a target=\"_blank\" href=\"http://jc.30dao.com/Default.html\">书法网校</a>");
+                    buffer.push("      </li>");
+
+                    buffer.push("      <li >");
+                    buffer.push("        <span class=\"pk\"></span>");
+                    buffer.push("        <a target=\"_blank\" href=\"http://" + schoolpk + "/\">在线排课</a>");
+                    buffer.push("      </li>");
+                }
+                buffer.push("      <li>");
+                buffer.push("        <span class=\"oa\"></span>");
+                buffer.push("        <a target=\"_blank\" href=\"http://" + schooloa + "/?UnitID=" + window.UnitID + "\">办公ＯＡ</a>");
+                buffer.push("      </li>");
+                buffer.push("      <li class=\"dpLast\">");
+                buffer.push("        <span class=\"zj\"></span>");
+                buffer.push("        <a target=\"_blank\" href=\"http://zj.30edu.com.cn/wx.aspx\">在线组卷</a>");
+                //buffer.push("        <a target=\"_blank\" href=\"http://" + schoolzj + "/?UnitID=" + window.UnitID + "\">在线组卷</a>");
+
+                buffer.push("      </li>");
+     
+                buffer.push("    </ul>");
+                buffer.push("  </div>");
+            }
+            buffer.push("</div>");
+        }
+    }
+    else {
+        isLogin = true;
+        if (dataResult == "false") {
+
+            buffer.push("  <div class=\"top_login\">");
+            //buffer.push("    <span>HI,欢迎来到" + window.FullName + "!</span> &nbsp;&nbsp;&nbsp;&nbsp;<div class=\"head_link\"><a href=\"https://passport.30edu.com.cn/Login/Index?returnurl=" + location.href + "&unitid=" + window.UnitID + "\">登录</a><a href=\"https://www.30edu.com.cn/UserRegister.shtml\">注册</a></div>");
+
+            //if (window.location.host != "" && window.location.host != null && window.location.host.indexOf("www") == 0) {
+            //    //一级域名
+            //    buffer.push("    <span>HI,欢迎来到" + window.FullName + "!</span> &nbsp;&nbsp;&nbsp;&nbsp;<div class=\"head_link\"><a href=\"/Login.shtml\">登录</a><a href=\"https://www.30edu.com.cn/UserRegister.shtml?UnitID=" + window.UnitID + "\">注册</a></div>");
+            //}
+            //else {
+            //    buffer.push("    <span>HI,欢迎来到" + window.FullName + "!</span> &nbsp;&nbsp;&nbsp;&nbsp;<div class=\"head_link\"><a href=\"https://passport.30edu.com.cn/Login/Index?returnurl=" + location.href + "&unitid=" + window.UnitID + "\">登录</a><a href=\"https://www.30edu.com.cn/UserRegister.shtml?UnitID=" + window.UnitID + "\">注册</a></div>");
+
+            //}
+
+            buffer.push("    <span>HI,欢迎来到" + window.FullName + "!</span> &nbsp;&nbsp;&nbsp;&nbsp;<div class=\"head_link\"><a href=\"https://passport.30edu.com.cn/Login/Index?returnurl=" + location.href + "&unitid=" + window.UnitID + "\">登录</a><a style=\"width:58px;background-repeat:repeat-x;\" href=\"https://www.30edu.com.cn/UnitRegister.shtml\">单位注册</a><a style=\"width:58px;background-repeat:repeat-x;\" href=\"https://www.30edu.com.cn/UserRegister.shtml?UnitID=" + window.UnitID + "\">个人注册</a></div>");
+
+
+            //var usertext = (zGZNL ? "注册号" : "网校号");
+            //var usertext20160920 = (zGZNL ? "注册号" : "用户名");
+            //buffer.push("  <div class=\"top_login\">");
+            //buffer.push("    <span>" + usertext20160920 + "：</span>");
+            //buffer.push("    <input  class=\"txtBox\" type=\"text\"  id=\"TopUserName\" value=\"" + usertext + "/邮箱/手机号\" onblur=\"if(this.value==''){this.value='" + usertext + "/邮箱/手机号'}\" onfocus=\"if(this.value=='" + usertext + "/邮箱/手机号'){this.value=''}\" />");
+            //buffer.push("    <span>密码：</span>");
+            //buffer.push("    <input class=\"txtBox short\" name=\"\" id=\"TopPassWord\" type=\"password\" />");
+
+            //if (window.UnitID == "c2eee9b4-4a95-49c1-93c1-1258793bfad6" || window.UnitID == "36654838-a0ee-496e-aad5-a33af4575bb3") {
+            //    //山东省实验中学 特殊处理
+            //    buffer.push("    <a href=\"javascript:void(0);\" id=\"TopLoginBtn\" onclick=\"TopLogin()\">登录</a>");
+            //} else {
+            //    if (window.UnitID == "3e5f8280-5d75-4ea7-8daf-32760e046952") {
+            //        buffer.push("    <select id=\"ChoicePage\" style=\"display:none;\" name=\"\">");
+            //    }
+            //    else {
+            //        buffer.push("    <select id=\"ChoicePage\" " + ((zJPB) ? "style=\"display:none;\"" : "") + " name=\"\">");
+            //    }
+
+              
+            //    buffer.push("      <option value=\"\" selected=\"selected\">选择去向</option>");
+            //    buffer.push("      <option value=\"http://" + schoolbd + "\">表单系统</option>");
+            //    buffer.push("      <option value=\"http://" + schoolzy + "\">教学资源</option>");
+            //    buffer.push("      <option value=\"http://" + schoolts + "\">数字图书</option>");
+            //    if (schoolsfkt == "1" || schoolsfkt == undefined) {
+            //        buffer.push("      <option value=\"http://" + schoolvd + "\">教育视频</option>");
+            //        buffer.push("      <option value=\"http://www.30sd.com/\">书法课堂</option>");
+            //        buffer.push("      <option value=\"http://" + schoolpk + "\">在线排课</option>");
+            //    }
+            //    buffer.push("      <option value=\"http://" + schooloa + "\"> 办公ＯＡ</option>");
+            //    buffer.push("      <option value=\"http://" + schoolzj + "\">在线组卷</option>");
+
+            //    //buffer.push("      <option value=\"http://" + schoolzd + "\">网校知道</option>");
+            //    //buffer.push("      <option value=\"http://" + schoolvk + "\">网校微课</option>");
+
+            //    buffer.push("    </select>");
+
+            //    buffer.push("    <a href=\"javascript:void(0);\" id=\"TopLoginBtn\" onclick=\"TopLogin()\">登录</a>");
+            //    //buffer.push("    <span>其他登录方式：</span>");
+
+            //    buffer.push("    <div class=\"thirdParty\">");
+            //    buffer.push("    </div>");
+            //}
+            buffer.push("  </div>");
+        }
+        else {
+            //buffer.push("  <div class=\"top_login\">");
+            //buffer.push("    <a href=\"http://www.hbeducloud.com/\">湖北教育云</a>");
+            //buffer.push("    <a href=\"http://new.hbeducloud.com/wjt/hbjyy/login?returnurl=http://new.hbeducloud.com/wjt/hbjyy/login?app_code=bjsjyunxiao\">登录</a>");
+            //buffer.push("  </div>");
+            buffer.push("  <div class=\"head_link\" style=\"float:left;\">");
+            buffer.push("    <a href=\"http://www.hbeducloud.com/\" target=\"_blank\">湖北教育云</a>");
+            buffer.push("    <span>|</span>");
+            buffer.push("    <a href=\"http://new.hbeducloud.com/wjt/hbjyy/login?returnurl=" + escape("http://new.hbeducloud.com/wjt/hbjyy/login?app_code=bjsjyunxiao")+"\" target=\"_blank\">登录</a>");
+            buffer.push("  </div>");
+
+            if (!zJPB) {
+                buffer.push("  <div class=\"head_link\" style=\"float:right;\">");
+                //if (typeof (window.CurrentUser) == "undefined" || window.CurrentUser == null) {
+                //    buffer.push("    <a href=\"http://" + schoolzz + "/UserRegister.shtml?UnitID=" + window.UnitID + "\" target=\"_blank\">注册新用户</a>");
+                //    buffer.push("    <span>|</span>");
+                //    buffer.push("    <a href=\"http://" + schoolzz + "/ForgetPassword.shtml?UnitID=" + window.UnitID + "\" target=\"_blank\">忘记密码</a>");
+                //    buffer.push("    <span>|</span>");
+                //}
+                if (window.UnitID == "c2eee9b4-4a95-49c1-93c1-1258793bfad6" || window.UnitID == "36654838-a0ee-496e-aad5-a33af4575bb3") {
+                    //山东省实验中学 特殊处理
+                }
+                else {
+                    if (window.UnitID != "3c7e2f64-a4b5-4852-83e6-a6e466dc2754" && window.UnitID != "3e5f8280-5d75-4ea7-8daf-32760e046952") {//怀化一中 特殊处理
+                        //buffer.push("    <a href=\"https://sj.qq.com/myapp/detail.htm?apkName=com.ude03.weixiao30\" target=\"_blank\">APP下载</a>");
+                        //if (schoolsfkt == "1" || schoolsfkt == undefined) {
+                        //    buffer.push("    <span>|</span>");
+                        //    buffer.push("    <a href=\"http://www.30sd.com/\" target=\"_blank\">书法课堂</a>");
+                        //}
+
+                        
+
+                       
+                        if (window.UnitID == "e976d5bd-36df-42b0-bfe5-d9223f318a9b") {
+                            buffer.push("    <a href=\"http://www.aipingke.net/\" target=\"_blank\">教研有道</a>");
+                            buffer.push("    <span>|</span>");
+                        }
+
+                        //buffer.push("    <a href=\"https://" + window.Account + ".form.30edu.com.cn/default.shtml?form=" + window.FormClassId + "\" target=\"_blank\" class=\"new\">招生报名</a>");
+                        //buffer.push("    <span>|</span>");
+                        //buffer.push("    <a href=\"https://" + window.Account + ".form.30edu.com.cn/SubmitConfig/00000000-0000-0000-0000-000000000000/deca46d7-55aa-4c3f-ba0d-5185be0f7229.shtml\" target=\"_blank\" class=\"new\">新生信息采集</a>");
+                        //buffer.push("    <span>|</span>");
+                        //buffer.push("    <a href=\"https://yaohao.30edu.com.cn/default.html\" target=\"_blank\" class=\"new\">摇号系统</a>");
+                        //buffer.push("    <span>|</span>");
+
+                        //buffer.push("    <a href=\"http://jpzy.30edu.com.cn/\" target=\"_blank\" class=\"new\">教学资源</a>");
+                        //buffer.push("    <span>|</span>");
+                        //buffer.push("    <a href=\"http://zj.30edu.com.cn/wx.aspx\" target=\"_blank\" class=\"new\">智能组卷</a>");
+                        //buffer.push("    <span>|</span>");
+
+                        if (window.UnitID != "fabbe966-71d2-4313-ae05-a84e22c6e625") {
+                            //buffer.push("    <a href=\"https://" + window.Account + ".form.30edu.com.cn/default.shtml?form=" + window.FormClassId + "\" target=\"_blank\" class=\"new\">招生报名</a>");
+                            //buffer.push("    <span>|</span>");
+
+                            //buffer.push("    <a href=\"https://" + window.Account + ".form.30edu.com.cn/SubmitConfig/00000000-0000-0000-0000-000000000000/deca46d7-55aa-4c3f-ba0d-5185be0f7229.shtml\" target=\"_blank\" class=\"new\">新生信息采集</a>");
+                            //buffer.push("    <span>|</span>");
+
+                            //if (window.UnitID != "03876d56-2cf0-404c-9ea1-356ff5189ab7") {
+                            //    buffer.push("    <a href=\"https://" + window.Account + ".form.30edu.com.cn/Default.shtml?search=on\" target=\"_blank\" class=\"new\">成绩查询</a>");
+                            //    buffer.push("    <span>|</span>");
+                            //}
+
+                            //if (window.UnitID != "03876d56-2cf0-404c-9ea1-356ff5189ab7") {
+                            //    buffer.push("    <a href=\"https://yaohao.30edu.com.cn/default.html\" target=\"_blank\" class=\"new\">分班摇号</a>");
+                            //    buffer.push("    <span>|</span>");
+                            //}
+
+                        }
+
+                        buffer.push("    <a href=\"https://mp.weixin.qq.com/s/Ip7uRsLBSWL14ezjmy1hIg\" target=\"_blank\" class=\"new\">直播课堂</a>");
+                        buffer.push("    <span>|</span>");
+                        buffer.push("    <a href=\"https://kzkt.30edu.com.cn/home/index/" + window.Account + "\" target=\"_blank\" class=\"new\">空中课堂</a>");
+                        buffer.push("    <span>|</span>");
+                        //buffer.push("    <a href=\"http://bp.pep.com.cn/jc/ywjyjks/ywjygjkcjc/index.html\" target=\"_blank\" class=\"new\">电子课本</a>");
+                        //buffer.push("    <span>|</span>");
+
+                        if (window.UnitID == "e976d5bd-36df-42b0-bfe5-d9223f318a9b") {
+                            buffer.push("    <a href=\"http://shuhua.nnyun.net/\" target=\"_blank\">书法课堂</a>");
+                            buffer.push("    <span>|</span>");
+                        }
+                        else {
+                            buffer.push("    <a href=\"http://jc.30dao.com/Default.html\" target=\"_blank\">书法网校</a>");
+                            buffer.push("    <span>|</span>");
+                        }
+
+                       
+                        //buffer.push("    <a href=\"http://product.30edu.com.cn/zbpk/\" target=\"_blank\">走班排课</a>");
+                        //buffer.push("    <span>|</span>");
+                    }
+
+                }
+
+                if (window.UnitID != 'b27a189b-57b8-4667-bafc-e41e30c12b55' && window.UnitID != "3c7e2f64-a4b5-4852-83e6-a6e466dc2754") {
+                    buffer.push("    <a href=\"http://" + schoolzz + "/help/index.shtml\" target=\"_blank\">帮助中心</a>");
+                }
+                buffer.push("  </div>");
+            }
+
+        }
+        buffer.push("<div id=\"dilogbag01\" class=\"dilogbag\"  style=\"display: none;\">");
+        buffer.push("<img id=\"imgCode\" width=\"180\" height=\"180\" src= \"\"/>");
+        buffer.push("<h3>请使用微校app扫描登录</h3>");
+        buffer.push("<p><span><i class=\"lef\"></i>手机扫码安全登录<i class=\"rig\"></i></span></p>");
+        buffer.push("</div>");
+
+
+        if (window.Ver == '255' && window.UnitType != "20") {
+            var adString = '<script type="text/javascript">var cpro_id = "u2170391";</script>';
+            adString += '<script src="//cpro.baidustatic.com/cpro/ui/cnw.js"></script>';
+            buffer.push(adString);
+        }
+    }
+
+    if (!zJPB && dataResult == "false") {
+        buffer.push("  <div class=\"head_link\" style=\"float:right;\">");
+        if (typeof (window.CurrentUser) == "undefined" || window.CurrentUser == null) {
+            //buffer.push("    <a href=\"http://" + schoolzz + "/UserRegister.shtml?UnitID=" + window.UnitID + "\" target=\"_blank\">注册新用户</a>");
+            //buffer.push("    <span>|</span>");
+            //buffer.push("    <a href=\"http://" + schoolzz + "/ForgetPassword.shtml?UnitID=" + window.UnitID + "\" target=\"_blank\">忘记密码</a>");
+            //buffer.push("    <span>|</span>");
+        }
+        if (window.UnitID == "c2eee9b4-4a95-49c1-93c1-1258793bfad6" || window.UnitID == "36654838-a0ee-496e-aad5-a33af4575bb3") {
+            //山东省实验中学 特殊处理
+        }
+        else {
+            if (window.UnitID != "3c7e2f64-a4b5-4852-83e6-a6e466dc2754" && window.UnitID != "3e5f8280-5d75-4ea7-8daf-32760e046952") {//怀化一中 特殊处理
+                ////buffer.push("    <a href=\"https://sj.qq.com/myapp/detail.htm?apkName=com.ude03.weixiao30\" target=\"_blank\">APP下载</a>");
+                //if (schoolsfkt == "1" || schoolsfkt == undefined) {
+                //    buffer.push("    <span>|</span>");
+                //    buffer.push("    <a href=\"http://www.30sd.com/\" target=\"_blank\">书法课堂</a>");
+                //}
+                //buffer.push("    <span>|</span>");
+
+               
+
+                if (window.UnitID == "e976d5bd-36df-42b0-bfe5-d9223f318a9b") {
+                    buffer.push("    <a href=\"http://www.aipingke.net/\" target=\"_blank\">教研有道</a>");
+                    buffer.push("    <span>|</span>");
+                }
+
+                //buffer.push("    <a href=\"http://jpzy.30edu.com.cn/\" target=\"_blank\" class=\"new\">教学资源</a>");
+                //buffer.push("    <span>|</span>");
+                //buffer.push("    <a href=\"http://zj.30edu.com.cn/wx.aspx\" target=\"_blank\" class=\"new\">智能组卷</a>");
+                //buffer.push("    <span>|</span>");
+
+                //buffer.push("    <a href=\"https://" + window.Account + ".form.30edu.com.cn/default.shtml?form=" + window.FormClassId + "\" target=\"_blank\" class=\"new\">招生报名</a>");
+                //buffer.push("    <span>|</span>");
+                //buffer.push("    <a href=\"https://" + window.Account + ".form.30edu.com.cn/SubmitConfig/00000000-0000-0000-0000-000000000000/deca46d7-55aa-4c3f-ba0d-5185be0f7229.shtml\" target=\"_blank\" class=\"new\">新生信息采集</a>");
+                //buffer.push("    <span>|</span>");
+                //buffer.push("    <a href=\"https://yaohao.30edu.com.cn/default.html\" target=\"_blank\" class=\"new\">摇号系统</a>");
+                //buffer.push("    <span>|</span>");
+
+
+
+                if (window.UnitID != "fabbe966-71d2-4313-ae05-a84e22c6e625") {
+                    //buffer.push("    <a href=\"https://" + window.Account + ".form.30edu.com.cn/default.shtml?form=" + window.FormClassId + "\" target=\"_blank\" class=\"new\">招生报名</a>");
+                    //buffer.push("    <span>|</span>");
+
+                    //buffer.push("    <a href=\"https://" + window.Account + ".form.30edu.com.cn/SubmitConfig/00000000-0000-0000-0000-000000000000/deca46d7-55aa-4c3f-ba0d-5185be0f7229.shtml\" target=\"_blank\" class=\"new\">新生信息采集</a>");
+                    //buffer.push("    <span>|</span>");
+
+
+                    //if (window.UnitID != "03876d56-2cf0-404c-9ea1-356ff5189ab7") {
+                    //    buffer.push("    <a href=\"https://" + window.Account + ".form.30edu.com.cn/Default.shtml?search=on\" target=\"_blank\" class=\"new\">成绩查询</a>");
+                    //    buffer.push("    <span>|</span>");
+
+                    //}
+
+
+                    //if (window.UnitID != "03876d56-2cf0-404c-9ea1-356ff5189ab7") {
+                    //    buffer.push("    <a href=\"https://yaohao.30edu.com.cn/default.html\" target=\"_blank\" class=\"new\">分班摇号</a>");
+                    //    buffer.push("    <span>|</span>");
+                    //}
+
+                }
+                buffer.push("    <a href=\"https://mp.weixin.qq.com/s/Ip7uRsLBSWL14ezjmy1hIg\" target=\"_blank\">直播课堂</a>");
+                buffer.push("    <span>|</span>");
+                buffer.push("    <a href=\"https://kzkt.30edu.com.cn/home/index/" + window.Account + "\" target=\"_blank\">空中课堂</a>");
+                buffer.push("    <span>|</span>");
+                //buffer.push("    <a href=\"http://bp.pep.com.cn/jc/ywjyjks/ywjygjkcjc/index.html\" target=\"_blank\">电子课本</a>");
+                //buffer.push("    <span>|</span>");
+               
+
+                if (window.UnitID == "e976d5bd-36df-42b0-bfe5-d9223f318a9b") {
+                    buffer.push("    <a href=\"http://shuhua.nnyun.net/\" target=\"_blank\">书画课堂</a>");
+                    buffer.push("    <span>|</span>");
+                }
+                else {
+                    buffer.push("    <a href=\"http://jc.30dao.com/Default.html\" target=\"_blank\">书法网校</a>");
+                    buffer.push("    <span>|</span>");
+                }
+              
+                //buffer.push("    <a href=\"http://product.30edu.com.cn/zbpk/\" target=\"_blank\">走班排课</a>");
+                //buffer.push("    <span>|</span>");
+            }
+        }
+
+        if (window.UnitID != 'b27a189b-57b8-4667-bafc-e41e30c12b55' && window.UnitID != "3c7e2f64-a4b5-4852-83e6-a6e466dc2754") {
+            buffer.push("    <a href=\"http://" + schoolzz + "/help/index.shtml\" target=\"_blank\">帮助中心</a>");
+        }
+        buffer.push("  </div>");
+    }
+
+    buffer.push("</div>");
+    buffer.push("  <div class=\"head_top_bg\"></div>");
+    buffer.push(" <iframe class=\"nozindex\"></iframe>");
+
+
+    if (window.UnitID == "c2eee9b4-4a95-49c1-93c1-1258793bfad6" || window.UnitID == "df09c9d4-7753-4d05-bf00-34dded823483" || window.UnitID == "36654838-a0ee-496e-aad5-a33af4575bb3") {
+        //山东省实验中学 特殊处理
+        $("#head_top").html("");
+    } else {
+        $("#head_top").html(buffer.join(""));
+    }
+
+    if (isLogin) {
+        $("#TopPassWord").keydown(function (event) {
+            var e = event || window.event || arguments.callee.caller.arguments[0];
+            if (e && e.keyCode == 13) {
+                $('#TopLoginBtn').trigger("click");
+            }
+        });
+    }
+
+}
+
+function InitLogin() {
+    var buffer = [];
+    var isLogin = false;
+    if (typeof (window.CurrentUser) != "undefined" && window.CurrentUser != null) {
+        buffer.push("    <div class=\"user_cont\">");
+        buffer.push("      <div class=\"login_head\">");
+        buffer.push("        <img width=\"80\" height=\"80\" align=\"left\" src=\"//face1.30edu.com.cn/" + window.CurrentUser.UserNumb + ".jpg-100?" + Math.random() + "\" />");
+
+        if (window.CurrentUser.UserType == "教师")
+            buffer.push("        <div><span>姓　名：</span><span title='" + window.CurrentUser.TrueName + "'>" + window.CurrentUser.TrueName + "</span></div><div class=\"numBlock\"><span>" + (zGZNL ? "注册号" : "网校号") + "：</span><span class=\"num\" title=\"" + window.CurrentUser.UserNumb + "\"><span>" + window.CurrentUser.UserNumb + "</span></span></div><div><span>类　型：</span>" + window.CurrentUser.UserType + "</div><div><span>学　科：</span>" + ((window.CurrentUser.Grade.length == 0 || (window.CurrentUser.Grade == 0)) ? "" : window.CurrentUser.Grade) + "  " + window.CurrentUser.Subject + " </div>");
+        else if (window.CurrentUser.UserType == "职工" || (window.CurrentUser.UserType == "客服") || (window.CurrentUser.UserType == "站长") || (window.CurrentUser.UserType == "管理员"))
+            buffer.push("        <div><span>姓　名：</span>" + window.CurrentUser.TrueName + "</div><div class=\"numBlock\"><span>" + (zGZNL ? "注册号" : "网校号") + "：</span><span class=\"num\" title=\"" + window.CurrentUser.UserNumb + "\"><span>" + window.CurrentUser.UserNumb + "</span></span></div><div><span>类　型：</span>" + window.CurrentUser.UserType + "</div><div><span>职　务：</span>" + window.CurrentUser.TeachType + " </div>");
+        else
+            buffer.push("        <div><span>姓　名：</span>" + window.CurrentUser.TrueName + "</div><div class=\"numBlock\"><span>" + (zGZNL ? "注册号" : "网校号") + "：</span><span class=\"num\" title=\"" + window.CurrentUser.UserNumb + "\"><span>" + window.CurrentUser.UserNumb + "</span></span></div><div><span>类　型：</span>" + window.CurrentUser.UserType + "</div><div><span>年　级：</span>" + window.CurrentUser.GradeName + " </div>");
+        buffer.push("      </div><div class=\"userlink\">");
+        buffer.push("        <a href=\"http://" + schoolkj + "/ \" target=\"_blank\">个人中心</a>");
+        if (window.CurrentUser.IsManage == "True" || window.CurrentUser.IsManage) {
+            buffer.push("<i>|</i><a href=\"http://managewx.30edu.com.cn/manage/?wx=" + window.Account + "\"  target=\"_blank\"><span>网校</span>管理</a>");
+        }
+        buffer.push("<i>|</i><a href=\"javascript:void(0)\" onclick=\"LoginOut()\"><span>安全</span>退出</a></div>");
+
+        buffer.push("    </div>");
+    } else {
+        isLogin = true;
+        var usertext = (zGZNL ? "注册号" : "网校号");
+        var usertext20160920 = (zGZNL ? "注册号" : "用户名");
+
+
+        buffer.push("<div class=\"user_cont\">");
+        buffer.push("  <ul class=\"user_inf\">");
+        buffer.push("    <li>");
+        buffer.push("      <div class=\"inputWrap\">");
+        buffer.push("        <label for=\"username\">" + usertext20160920 + "</label>");
+        buffer.push("        <p>");
+        buffer.push("          <input class=\"txtBox\" type=\"text\" id=\"LoginUserName\" value=\"" + usertext + "/邮箱/手机号\" onblur=\"if(this.value==''){this.value='" + usertext + "/邮箱/手机号'}\" onfocus=\"if(this.value=='" + usertext + "/邮箱/手机号'){this.value=''}\" />");
+        buffer.push("        </p>");
+        buffer.push("      </div>");
+        buffer.push("    </li>");
+        buffer.push("    <li>");
+        buffer.push("      <div class=\"inputWrap\">");
+        buffer.push("        <label for=\"pwd\">密　码</label>");
+        buffer.push("        <p>");
+        buffer.push("          <input class=\"txtBox\" type=\"password\" name=\"pwd\" id=\"PassWord\" />");
+        buffer.push("        </p>");
+        buffer.push("      </div>");
+        buffer.push("    </li>");
+        buffer.push("  </ul>");
+        buffer.push("  <div class=\"user_action\">");
+        buffer.push("    <div class=\"forgerpwd\">");
+        buffer.push("      <input type=\"checkbox\" id=\"IsSave\"/>");
+        buffer.push("      <label for=\"forget\">记住密码</label>");
+        buffer.push("    </div>");
+        buffer.push("    <div class=\"login_button\">");
+        buffer.push("      <input class=\"button\" name=\"button\" type=\"button\" id=\"LoginBtn\" onclick=\"Login()\"  value=\"登 录\" />");
+        buffer.push("    </div>");
+        buffer.push("  </div>");
+
+        if (window.UnitType == "20") {
+            buffer.push("   <ul class=\"userlink\">");
+            buffer.push("     <li><a href=\"http://" + schoolzz + "/UnitRegister.shtml?PUnitID=" + window.UnitID + "\" target=\"_blank\">直属单位<span>网站</span>注册</a></li>");
+            buffer.push("     <li><a href=\"http://" + schoolzz + "/UserRegister.shtml?UnitID=" + window.UnitID + "\" target=\"_blank\">教育局人员注册</a></li>");
+            buffer.push("  </ul>");
+        } else {
+            buffer.push("  <div class=\"userlink\">");
+            buffer.push("    <a href=\"http://" + schoolzz + "/UserRegister.shtml?UnitID=" + window.UnitID + "\" target=\"_blank\">注册<span>新用户</span></a>");
+            buffer.push("    <i>|</i>");
+            buffer.push("    <a href=\"http://" + schoolzz + "/ForgetPassword.shtml\" target=\"_blank\">忘记密码</a>");
+            buffer.push("    <i>|</i>");
+            buffer.push("    <a href=\"http://www.30edu.com.cn/help/index.shtml\" target=\"_blank\">帮助<span>中心</span></a>");
+            buffer.push("  </div>");
+        }
+        buffer.push("</div>");
+    }
+    $("#LoginWebPart").html(buffer.join(""));
+    if (isLogin) {
+        $("#PassWord").keydown(function (event) {
+            var e = event || window.event || arguments.callee.caller.arguments[0];
+            if (e && e.keyCode == 13) {
+                $('#LoginBtn').trigger("click");
+            }
+        });
+    }
+}
+
+function TopLogin() {
+    var userName = $("#TopUserName").val();
+    var pwd = $("#TopPassWord").val();
+    var choicepage = $("#ChoicePage").val();
+    var isPass = validateLogin(userName, pwd);
+    if (isPass) {
+        var url = "/Login.GetRSA.data";
+        jQuery.getJSON(url,
+            { t: new Date() },
+            function (json) {
+                setMaxDigits(129);
+                var key = new RSAKeyPair(json.Exponent, "", json.Modulus);
+                var pwdRtn = encryptedString(key, pwd);
+                var info = {};
+                info.UserName = userName;
+                info.PassWord = pwdRtn;
+                info.IsSave = false;
+                info.host = window.location.host;
+
+                $("#LoginBtn").attr("disabled", "disabled");
+                $.post("/Login.DoNewLogin.data", info, function (data) {
+
+                    if (data.R == "ok" || data.R == "2") {
+                        if (data.R == "2") {
+                            $.alert(data.Text);
+                        }
+
+                        window.CurrentUser = data.User;
+                        if (choicepage != null && choicepage != "") {
+                            window.location = choicepage + "?UnitID=" + window.UnitID;
+                        } else {
+                            if (data.SSO != "") {
+                                var img = new Image();
+                                img.onerror = winRef;
+                                img.onsuccess = winRef;
+                                img.src = data.SSO;
+                            } else {
+                                winRef();
+                            }
+                        }
+
+                        if (data.IsShowWin) {
+                            //UserDefectWin();
+                        }
+                    } else {
+                        if (data.R == "0") {
+                            $.alert(data.Text);
+                        }
+                        $("#LoginBtn").removeAttr("disabled");
+                    }
+                }, "json");
+            });
+
+
+    }
+}
+
+
+function PunishListWin(unitID) {
+    $.post("/Login.GetDetail.data", { "UnitID": unitID }, function (data) {
+        if (data.count > 0) {
+            var html = [];
+            html.push("<div id=\"xiangq\">");
+            html.push("您单位目前的积分为" + data.Point + "分，信用等级为" + data.UnitLevel + "级。");
+            html.push("<table cellspacing=\"0\" cellpadding=\"0\" class=\"itemList\">");
+            html.push("<thead>");
+            html.push("  <tr>");
+            html.push("    <th width=\"100px\">时间</th>");
+            html.push("    <th width=\"150px\">原因</th>");
+            html.push("    <th width=\"80px\">单位积分</th>");
+            html.push("    <th width=\"80px\">信用等级</th>");
+            html.push("  </tr>");
+            html.push("</thead>");
+            html.push("<tbody>");
+            for (var i = 0; i < data.PunishDetail.length; i++) {
+                html.push("  <tr>");
+                var detail = data.PunishDetail[i];
+                html.push("    <td>" + detail.AddTime + "</td>");
+                html.push("    <td style=\"text-align:left;width:375px;\">" + detail.BadContent + "</td>");
+                html.push("    <td>" + detail.ReducePoint + "</td>");
+                html.push("    <td>" + detail.ReputationLevel + "</td>");
+
+                html.push("  <tr>");
+            }
+            html.push("</tbody>");
+            html.push("</table>");
+            html.push("</div>");
+
+            $.dialog({
+                title: "查看详细",
+                content: html.join(""),
+                lock: true,
+                cancel: true,
+                cancelVal: "确定",
+            });
+        }
+
+    }, "json");
+}
+
+function Login() {
+    var userName = $("#LoginUserName").val();
+    var pwd = $("#PassWord").val();
+    var isSave = true;
+    if ($("#IsSave").length > 0)
+        isSave = $("#IsSave")[0].checked;
+    var isPass = validateLogin(userName, pwd);
+    if (isPass) {
+
+        var url = "/Login.GetRSA.data";
+
+        jQuery.getJSON(url,
+            { t: new Date() },
+            function (json) {
+                setMaxDigits(129);
+                var key = new RSAKeyPair(json.Exponent, "", json.Modulus);
+                var pwdRtn = encryptedString(key, pwd);
+                var nameRtn = encryptedString(key, userName);
+
+
+                var info = {};
+                info.UserName = nameRtn;
+                info.PassWord = pwdRtn;
+                info.IsSave = isSave;
+                info.host = window.location.host;
+
+                $("#LoginBtn").attr("disabled", "disabled");
+                $.post("/Login.DoLogin.data", info, function (data) {
+
+                    if (data.R == "ok" || data.R == "2") {
+                        if (data.R == "2") {
+                            $.alert(data.Text);
+                        }
+
+                        window.CurrentUser = data.User;
+                        if (data.SSO != "") {
+                            var img = new Image();
+                            img.onerror = winRef;
+                            img.onsuccess = winRef;
+                            img.src = data.SSO;
+                        } else {
+                            winRef();
+                        }
+
+
+                        if (data.IsShowWin) {
+                            //UserDefectWin();
+                        }
+
+                    } else {
+                        if (data.R == "0") {
+                            $.alert(data.Text);
+                        }
+                        $("#LoginBtn").removeAttr("disabled");
+                    }
+                }, "json");
+            });
+
+
+        
+    }
+}
+function alreadLogin(isLogin) {
+    if (isLogin) {
+        $.post("/Login.AlreadyLogin.data", { host: window.location.host }, function (data) {
+            if (data.R != "ok") {
+                InitLogin();
+            }
+            else {
+                window.CurrentUser = data.User;
+                if (data.SSO != "") {
+                    var img = new Image();
+                    img.onerror = winRef;
+                    img.onsuccess = winRef;
+                    img.src = data.SSO;
+                } else {
+                    winRef();
+                }
+
+                if (data.IsShowWin) {
+                    //UserDefectWin();
+                }
+            }
+        }, "json");
+    }
+}
+
+function validateLogin(userName, pwd) {
+    var numReg = new RegExp("^[0-9]{3,9}");
+    var usertext = (zGZNL ? "注册号" : "网校号");
+    var emailReg = new RegExp("^\\w+((-\\w+)|(\\.\\w+))*\\@[A-Za-z0-9]+((\\.|-)[A-Za-z0-9]+)*\\.[A-Za-z0-9]+$");
+    if (userName == "" || userName == (usertext + "/邮箱/手机号")) {
+        alert("请输入" + usertext + "或者Email");
+        $("#LoginUserName").focus();
+        return false;
+    }
+    if (!numReg.test(userName) && !emailReg.test(userName)) {
+        alert("请输入正确的" + usertext + "或者邮箱或手机号");
+        $("#LoginUserName").focus();
+        return false;
+
+    }
+    if (pwd == "" || pwd.length == 0) {
+        alert("请输入密码");
+        $("#PassWord").focus();
+        return false;
+    }
+    return true;
+
+}
+
+
+function LoginOut() {
+    window.CurrentUser = null;
+    $.post("/Login.LoginOut.data", { host: window.location.host }, function (sso) {
+        if (sso != "") {
+            var img = new Image();
+            img.onerror = winRef;
+            img.onsuccess = winRef;
+            img.src = sso;
+        } else {
+            winRef();
+        }
+    });
+}
+
+
+function InitMenu() {
+    var menu = $("ul.head_menu");
+    menu.find("a[href='" + location.pathname + "']").parents("li.m").addClass("active");
+
+    var t = menu.attr("t");
+    var childMenu = menu.find(">li");
+    var minX = 232;
+    var widthmax = 960;
+    var childwidth = menu.find("li li").width();
+    if (t == "2") {
+        childMenu.each(function () {
+
+            var width = $(this).find("li").length * childwidth;
+            if (width > widthmax) width = widthmax;
+            var maxX = widthmax - width + minX;
+            var x = $(this).offset().left - width / 2 + childwidth / 2;
+            if (x < minX) x = minX;
+            if (x > maxX) x = maxX;
+            $(this).find("ul").css({ width: width, left: x });
+
+        });
+    }
+    if (t == "3") {
+        childMenu.each(function () {
+            if ($(this).find("li").length > 15) {
+                var width = (parseInt(($(this).find("li").length - 1) / 15) + 1) * childwidth;
+                if (width > widthmax) width = widthmax;
+                $(this).find("ul").css({ width: width });
+            }
+
+        });
+    }
+
+
+    childMenu.bind("mouseover", function () {
+        childMenu.removeClass("hover");
+        $(this).addClass("hover");
+        //$(this).find("ul").show();
+        $(this).find(".menu-ul>li").hover(function () {
+            $(this).addClass("on");
+        }, function () {
+            $(this).removeClass("on");
+        });
+    });
+
+
+    childMenu.bind("mouseout", function () {
+        $(this).removeClass("hover");
+        //$(this).find("ul").hide();
+    });
+
+    if ($(".menu-ul li").find("ul").html() != "") {
+        $(".menu-ul li").find("div.menu-ul-sub").siblings("a").append("<span class='sub'></span>");
+    }
+
+}
+
+function winRef() {
+    if (typeof (window.needRef) == "undefined" || window.needRef == "") {
+        window.needRef = false;
+    }
+    if (window.needRef) {
+        window.location.reload();
+    } else {
+        InitHeadTop();
+        InitLogin();
+    }
+}
+
+
+function ShowLogo(flashvars) {
+    //var access = "<param name='allowNetworking' value='all'><param name='allowScriptAccess' value='always'>";
+    //var network = " allowNetworking='all' AllowScriptAccess='always' ";
+    var access = "<param name='allowNetworking' value='internal'><param name='allowScriptAccess' value='sameDomain'>";
+    var network = " allowNetworking='internal' AllowScriptAccess='sameDomain' ";
+
+    //域名更换 替换遗漏数据
+    flashvars = flashvars.replace(/cdn.30edu.com\//ig, "cdn.30edu.com.cn/").replace(/logo1.30edu.com\//ig, "logo1.30edu.com.cn/").replace(/font.30edu.com\//ig, "font.30edu.com.cn/");
+    flashvars = flashvars.replace(/\/\/cdn-portal-img.30edu.com.cn\//ig, "http://cdn-portal-img.30edu.com.cn/");
+    flashvars = flashvars.replace(/\/\/cdn.30edu.com.cn\//ig, "http://cdn.30edu.com.cn/");
+    document.writeln("<object id='logo' width='960' height='600' codebase='http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=10,0,0,0' classid='clsid:D27CDB6E-AE6D-11cf-96B8-444553540000'><param name='wmode' value='transparent'>" + access + "<param name='flashvars' value='" + flashvars + "'><param name='movie' value='//cdn.30edu.com.cn/Portal/Logo/LogoShow.swf'><param name='quality' value='high'><embed name='logo' width='960' height='600' flashvars='" + flashvars + "' " + network + " type='application/x-shockwave-flash' pluginspage='http://www.macromedia.com/go/getflashplayer' quality='high' wmode='transparent' src='//cdn.30edu.com.cn/Portal/Logo/LogoShow.swf'></object>");
+}
+
+//宽屏版
+function ShowLogo_W(flashvars) {
+    var access = "<param name='allowNetworking' value='internal'><param name='allowScriptAccess' value='sameDomain'>";
+    var network = " allowNetworking='internal' AllowScriptAccess='sameDomain' ";
+
+    //域名更换 替换遗漏数据
+    flashvars = flashvars.replace(/cdn.30edu.com\//ig, "cdn.30edu.com.cn/").replace(/logo1.30edu.com\//ig, "logo1.30edu.com.cn/").replace(/font.30edu.com\//ig, "font.30edu.com.cn/");
+    flashvars = flashvars.replace(/\/\/cdn-portal-img.30edu.com.cn\//ig, "http://cdn-portal-img.30edu.com.cn/");
+    flashvars = flashvars.replace(/\/\/cdn.30edu.com.cn\//ig, "http://cdn.30edu.com.cn/");
+    document.writeln("<object id='logo' width='1200' height='600' codebase='http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=10,0,0,0' classid='clsid:D27CDB6E-AE6D-11cf-96B8-444553540000'><param name='wmode' value='transparent'>" + access + "<param name='flashvars' value='" + flashvars + "'><param name='movie' value='//cdn.30edu.com.cn/Portal/Logo/LogoShow_W.swf'><param name='quality' value='high'><embed name='logo' width='1200' height='600' flashvars='" + flashvars + "' " + network + " type='application/x-shockwave-flash' pluginspage='http://www.macromedia.com/go/getflashplayer' quality='high' wmode='transparent' src='//cdn.30edu.com.cn/Portal/Logo/LogoShow_W.swf'></object>");
+
+}
+
+
+//-------------------随机生成 by--dengyi 
+var chars = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+
+function generateMixed(n) {
+    var res = "";
+    for (var i = 0; i < n; i++) {
+        var id = Math.ceil(Math.random() * 35);
+        res += chars[id];
+    }
+    return res;
+}
+//------------------------------
+
+function UserDefectWin() {
+    $.dialog({
+        title: "完善信息",
+        content: "<iframe src=\"https://www.30edu.com.cn/ifrUser.shtml\" scrolling=\"no\" allowtransparency=\"true\" frameborder=\"0\" width=\"860px\" height=\"380px\" id=\"UserDetailWin\"></iframe>",
+        lock: true,
+        cancel: true,
+        cancelVal: "取消",
+    });
+}
+
+function CheckDomain() {
+    var str = "";
+    $.ajax({
+        async: false,
+        type: "POST",
+        url: "/Login.CheckDomain.data",
+        data: { unitID: window.UnitID },
+        dataType: "",
+        success: function (data) {
+            str = data;
+        }
+    })
+    return str;
+}
+
+//长文本栏目宽度匹配
+if ($(".menuBar").hasClass("long-text")) {
+    //console.log("long-text:" + $(".menuBar").hasClass("long-text"));
+    $(".head_menu .menu-ul").each(function () {
+        //console.log(this);
+        var flc = $(this).parent().width();
+        var slc = $(this).outerWidth();
+        var d = slc - $(this).width();
+        //console.log("flc:", flc, "slc:", slc, "d:", d);
+        if (flc >= slc) {
+            $(this).css({ width: flc - d });
+            $(this).children("li").css({ minWidth: flc - d });
+        }
+    })
+
+    //console.log("evenline:" + $(".head_menu").hasClass("evenline"));
+    if ($(".head_menu").hasClass("evenline")) {
+        $(".head_menu .menu-ul-sub > ul").each(function () {
+            //console.log(this);
+            var slcli = $(this).parent().parent().width();
+            var tlc = $(this).outerWidth();
+            var d = tlc - $(this).width();
+            //console.log("slcli:", slcli, "tlc:", tlc, "d:", d);
+            if (slcli >= tlc) {
+                $(this).css({ width: slcli - d });
+            }
+        })
+    }
+};
